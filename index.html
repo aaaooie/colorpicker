@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>цветовой тотализатор</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style type="text/css">
+
+		body {
+			overflow: hidden;
+		}
+		section {
+			width: 100%;
+			min-height: 100%;
+			display: flex;
+		}
+
+		#hi {
+			text-align: center;
+		}
+
+
+	</style>
+</head>
+<body>
+
+
+	<section id=hi>
+
+		<div id=slide>
+
+			<h1>Самый модный цвет 2024 года</h1>
+			<h2>Узнать, какой цвет года на&nbsp;самом деле люди считают самым модным, сравнить с&nbsp;тем&nbsp;какой получился у&nbsp;Pantone</h2>
+
+		</div>
+
+		<button id=start>
+			выбрать
+		</button>
+
+	</section>
+	<section id=pick style="display: none;"></section>
+	<section id=results style="display: none;"></section>
+
+</body>
+
+
+	<script type="text/javascript">
+
+		const $ = str=>document.querySelectorAll(str) // str->array of el
+
+
+		let setHeight =  e => {
+			console.log(window.innerHeight)
+			// console.log($('section'))
+			Array.from($('section')).map(el=>el.style.height=`${window.innerHeight-20}px`)
+		}
+
+
+		addEventListener("resize", setHeight);
+
+
+
+		setHeight(null)
+
+	</script>
+
+</html>
