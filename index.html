@@ -9,15 +9,26 @@
 
 		body {
 			overflow: hidden;
+			margin:0;
+			padding:0;
 		}
 		section {
 			width: 100%;
 			min-height: 100%;
-			display: flex;
+			align-items: center;
+  			justify-content: center;
 		}
 
 		#hi {
 			text-align: center;
+		}
+
+		#slide {
+			    margin: auto;
+		}
+
+		button#start {
+			margin:8px;
 		}
 
 
@@ -30,17 +41,68 @@
 
 		<div id=slide>
 
+
 			<h1>Самый модный цвет 2024 года</h1>
 			<h2>Узнать, какой цвет года на&nbsp;самом деле люди считают самым модным, сравнить с&nbsp;тем&nbsp;какой получился у&nbsp;Pantone</h2>
 
+			<img src=logo.svg>
 		</div>
+
 
 		<button id=start>
 			выбрать
 		</button>
 
 	</section>
-	<section id=pick style="display: none;"></section>
+	<section id=pick style="display: none;">
+
+		<div
+			id=colorpicker
+			style="background-color: gray;"
+
+		></div>
+
+		<div
+			id=brightcontrol
+			style=" background-color: black;"
+
+		>
+
+			<div id="slider"></div>
+		</div>
+
+		<div id="_form">
+
+			<form>
+				<h3 id=color_value></h3>
+
+				<input
+					type="text" name="your_name"
+					placeholder="твоё имя"
+				/>
+				<input
+					type="text" name="your_link"
+					placeholder="ссылка на тебя"
+				/>
+
+				<input
+					type="text" name="color_name"
+					placeholder="название цвета"
+				/>
+
+
+				<button id=send>
+					отправить
+				</button>
+
+
+			</form>
+
+
+		</div>
+
+	</section>
+
 	<section id=results style="display: none;"></section>
 
 </body>
@@ -50,19 +112,117 @@
 
 		const $ = str=>document.querySelectorAll(str) // str->array of el
 
+		const $$ = str=>f=>Array.from($(str)).map(f)
 
-		let setHeight =  e => {
-			console.log(window.innerHeight)
-			// console.log($('section'))
-			Array.from($('section')).map(el=>el.style.height=`${window.innerHeight-20}px`)
+		let id=s=>document.getElementById(s)
+
+		let state = null
+
+
+
+
+		let draw =  e => {
+
+			let padding=16+16
+
+			let height = window.innerHeight-padding
+
+			Array.from($('section')).map(el=>el.style.height=`${height}px`)
+
+
+			id('slide').style.height=`${height-42}px`
+
+			id('start').style.width=`${window.innerWidth-16}px`
+
 		}
 
+		draw(null)
 
-		addEventListener("resize", setHeight);
+		addEventListener('resize', draw);
+
+		let eyeDropper=null
+
+		if (window.EyeDropper) {
+
+			eyeDropper = new EyeDropper()
+		}
+
+		let basic_color = '#ffffff'
+		let selected_color = '#ffffff'
+		let bright=1
+
+		let set_brightness=color=>'#'+color
+			.slice(1)
+			.match(/.{1,2}/g)
+			.map(s=>parseInt(s,16))
+			.map(a=>Math.round(a*bright))
+			.map(n=>n.toString(16))
+			.map(s=>1==s.length?`0${s}`:s)
+			.join('')
+
+
+		let pick = event=>{
+
+			if (event.target.id=='colorpicker') {
+
+				if (eyeDropper) {
+
+					eyeDropper.open().then(selectedColor => {
+					    // console.log(typeof selectedColor) // { sRGBHex: '#008080' }
+					    console.log(selectedColor) // { sRGBHex: '#008080' }
+
+					    try{
+					    	basic_color=selectedColor.sRGBHex
+					    	console.log(id('brightcontrol').style)
+
+
+					    	id('brightcontrol').setAttribute('style',`background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
+					    }catch (e) {
+					    	console.log(e)
+					    }
+					    return true
+					  }).catch(() => {
+						  console.log('eye dropper cancelled')
+					  })
+				}
 
 
 
-		setHeight(null)
+			}
+
+			if (event.target.id=='brightcontrol'
+				|| event.target.id=='slider') {
+
+				let r = id('brightcontrol').getBoundingClientRect()
+
+				bright = (event.x-r.x)/r.width
+
+				id('slider').style.right=`${((1-bright)*r.width)-10}px`
+
+				selected_color=set_brightness(basic_color)
+
+				// console.log(selected_color)
+				// console.log(basic_color)
+				// console.log(bright)
+
+				$$('body')(el=>el.style.background=selected_color)
+
+				id('color_value').innerText=selected_color
+			}
+		}
+
+		addEventListener('click',pick)
+
+		const changeSection = name=>
+			$$('section')(el=>
+					el.style.display=el.id==name?'block':'none')
+
+		document
+			.getElementById('start')
+				.addEventListener('click', e=>changeSection('pick'))
+
+
+		// changeSection('pick')
 
 	</script>
 
