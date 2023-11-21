@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>цветовой тотализатор</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style type="text/css">
+
+		body {
+			overflow: hidden;
+			margin:0;
+			padding:0;
+		}
+		section {
+			width: 100%;
+			min-height: 100%;
+/*			align-items: center;
+  			justify-content: center;
+*/		}
+
+		#hi {
+			text-align: center;
+		}
+
+		#slide {
+			    margin: auto;
+		}
+
+		button#see_results {
+			margin:8px;
+		}
+
+		#results>div {
+			display: inline-block;
+			width: 25%;
+			min-height: 200px;
+			margin: 0 -2px 0 -2px;
+			padding: 0;
+			border: 0px solid;
+			box-sizing: border-box;
+
+		}
+
+		#results {
+			padding-left:2px;
+		}
+
+
+	</style>
+</head>
+<body>
+
+
+
+
+	<section id=response style="display: block; background: {{pick}};">
+
+		<div id=slide>
+			Мы получили ваш вариант
+
+			<h3>{{pick}}</h3>
+
+			<button id=see_results>смотреть другие варианты</button>
+		</div>
+	</section>
+	<section id=results style="display: none;">
+		{{#each all_picks}}
+			<div style="background:{{this.color_value}};" alt="{{this.color_name}}">
+			   <a href={{this.user_link}}>
+			   		{{this.user_name}}
+			   </a>
+			</div>
+		{{/each}}
+	</section>
+
+</body>
+
+
+	<script type="text/javascript">
+
+		let pick = '{{pick}}'
+
+		// let all_picks = {{{all_picks}}}
+
+		const $ = str=>document.querySelectorAll(str) // str->array of el
+
+		const $$ = str=>f=>Array.from($(str)).map(f)
+
+		let id=s=>document.getElementById(s)
+
+		const changeSection = name=>
+			$$('section')(el=>
+					el.style.display=el.id==name?'block':'none')
+
+		document
+			.getElementById('see_results')
+				.addEventListener('click', e=>changeSection('results'))
+
+
+
+	</script>
+
+</html>

@@ -74,14 +74,14 @@
 		<div id="_form">
 
 			<form method=post action="" >
-				<h3 id=color_value></h3>
+				<h3 id=color_selected></h3>
 
 				<input
-					type="text" name="your_name"
+					type="text" name="user_name"
 					placeholder="твоё имя"
 				/>
 				<input
-					type="text" name="your_link"
+					type="text" name="user_link"
 					placeholder="ссылка на тебя"
 				/>
 
@@ -90,6 +90,10 @@
 					placeholder="название цвета"
 				/>
 
+				<input
+					id=color_value
+					type="hidden" name=color_value
+				/>
 
 				<button id=send>
 					отправить
@@ -207,7 +211,8 @@
 
 				$$('body')(el=>el.style.background=selected_color)
 
-				id('color_value').innerText=selected_color
+				id('color_selected').innerText=selected_color
+				id('color_value').setAttribute('value',selected_color)
 			}
 		}
 
