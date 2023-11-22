@@ -1,6 +1,10 @@
 Next task
 
-- backend to store data
+- обратная сортировка данных
+- add date to vote
+- better mobile layout: results screen
+- better brightness control behaviour
 - onclick calculation with color picker
-- better mobile layout
+- cookie to save vote
 - adapt desktop layout
+- real db

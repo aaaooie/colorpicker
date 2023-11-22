@@ -14,10 +14,12 @@
 		}
 		section {
 			width: 100%;
-			min-height: 100%;
+			height: 999999px;
 /*			align-items: center;
   			justify-content: center;
-*/		}
+*/
+			color: white;
+		}
 
 		#hi {
 			text-align: center;
@@ -29,6 +31,14 @@
 
 		button#see_results {
 			margin:8px;
+
+			width: calc(100% - 16px);
+			background: white;
+			border-radius: 12px;
+			height: 24px;
+			border: 0;
+
+			cursor:pointer;
 		}
 
 		#results>div {
@@ -68,7 +78,7 @@
 		{{#each all_picks}}
 			<div style="background:{{this.color_value}};" alt="{{this.color_name}}">
 			   <a href={{this.user_link}}>
-			   		{{this.user_name}}
+			   		&nbsp;{{this.user_name}}
 			   </a>
 			</div>
 		{{/each}}
