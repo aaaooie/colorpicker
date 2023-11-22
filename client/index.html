@@ -29,6 +29,7 @@
 
 		button#start {
 			margin:8px;
+			cursor: pointer;
 		}
 
 		#color_selected {
@@ -55,8 +56,12 @@
 
 		#_form input {
 			width: 100%;
-			width: calc(100% - 8px);
-    		margin: 6px 0px;
+			width: calc(100% - 10px);
+    		margin: 0px 0px 12px 0px;
+
+    		padding-left: 8px;
+    		padding-top: 2px;
+    		padding-bottom: 2px;
 
     		border: 0;
 
@@ -75,18 +80,28 @@
 			letter-spacing: -0.04em;
 			text-transform: lowercase;
 
-
-
-
 		}
 
+		input:focus {outline:none;}
+
 		#send {
+
+			cursor: pointer;
 
 			width: 100%;
 			background: white;
 			border-radius: 12px;
 			height: 24px;
 			border: 0;
+		}
+
+		#color_selected {
+			margin-bottom: 12px;
+    		margin-top: 12px;
+		}
+
+		#picker {
+			display: none;
 		}
 
 
@@ -165,7 +180,10 @@
 
 	</section>
 
-	<section id=results style="display: none;"></section>
+	<svg id=picker width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="1" width="22" height="22" rx="11" fill="#0500FF"/>
+<rect x="1" y="1" width="22" height="22" rx="11" stroke="white" stroke-width="2"/>
+</svg>
 
 </body>
 

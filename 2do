@@ -1,7 +1,7 @@
 Next task
 
-- better mobile layout: results screen: we got your result
 - better brightness control behaviour: edge cases, sliding
+- better mobile layout: results screen: we got your result
 - onclick calculation with color picker (for not chrome)
 - add datetime to vote
 - cookie to save vote
