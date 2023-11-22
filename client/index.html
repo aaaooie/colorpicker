@@ -259,6 +259,18 @@
 
 		}
 
+		let update_brightcontrol = (w)=>{
+
+			let r = ((1-bright)*w)-10
+
+			if (r<0)r=0
+			if (r>w-22)r=w-22
+
+			id('slider').style.right=`${r}px`
+
+			select_color(set_brightness(basic_color))
+		}
+
 
 		let pick = event=>{
 
@@ -300,14 +312,48 @@
 
 				bright = (event.x-r.x)/r.width
 
-				id('slider').style.right=`${((1-bright)*r.width)-10}px`
-
-				select_color(set_brightness(basic_color))
+				update_brightcontrol(r.width)
 
 			}
 		}
 
 		addEventListener('click',pick)
+
+		let drag = false
+
+		let rr = id('brightcontrol').getBoundingClientRect()
+
+		let ondown=e=>{if(e.target.id=='slider'){
+			drag=true
+			e.target.style.cursor='drag'
+			rr = id('brightcontrol').getBoundingClientRect()
+		}}
+		let onup=e=>{if(drag){
+			drag=false
+			id('slider').style.cursor='pointer'
+
+		}}
+
+
+		// console.log(rr)
+
+		let onmove=e=>{
+			if (drag){
+
+
+				bright = (e.x-rr.x)/rr.width
+
+				if(bright>1)bright=1
+				if(bright<0)bright=0
+
+				update_brightcontrol(rr.width)
+			}
+		}
+
+
+		addEventListener('mousedown', ondown)
+		addEventListener('mouseup', onup)
+		addEventListener('mousemove', onmove)
 
 		const changeSection = name=>
 			$$('section')(el=>
@@ -316,7 +362,6 @@
 		document
 			.getElementById('start')
 				.addEventListener('click', e=>changeSection('pick'))
-
 
 		changeSection('pick')
 
