@@ -1,10 +1,9 @@
 Next task
 
-- обратная сортировка данных
-- add date to vote
-- better mobile layout: results screen
-- better brightness control behaviour
-- onclick calculation with color picker
+- better mobile layout: results screen: we got your result
+- better brightness control behaviour: edge cases, sliding
+- onclick calculation with color picker (for not chrome)
+- add datetime to vote
 - cookie to save vote
 - adapt desktop layout
 - real db

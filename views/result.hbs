@@ -8,21 +8,22 @@
 	<style type="text/css">
 
 		body {
-			overflow: hidden;
+/*			overflow: hidden;*/
 			margin:0;
 			padding:0;
 		}
 		section {
 			width: 100%;
-			height: 999999px;
+/*			height: 999999px;*/
 /*			align-items: center;
   			justify-content: center;
 */
 			color: white;
 		}
 
-		#hi {
-			text-align: center;
+		h3 {
+		 padding: 0;
+		 margin: 0;
 		}
 
 		#slide {
@@ -39,19 +40,35 @@
 			border: 0;
 
 			cursor:pointer;
+
+			position: absolute;
+			bottom:0px;
 		}
 
 		#results>div {
-			display: inline-block;
+			display: inline-flex;
 			width: 25%;
 			min-height: 200px;
+			height: 100%;
 			margin: 0 -2px 0 -2px;
 			padding: 0;
 			border: 0px solid;
 			box-sizing: border-box;
 
+			color: white;
+
+
 		}
 
+		#results>div>.desc {
+			display: block;
+  			align-self: flex-end;
+			color:white;
+		}
+		#results>div>.desc>a {
+			color:white;
+			text-decoration: none;
+		}
 		#results {
 			padding-left:2px;
 		}
@@ -67,19 +84,22 @@
 	<section id=response style="display: block; background: {{pick}};">
 
 		<div id=slide>
-			Мы получили ваш вариант
+			<h3>Мы получили твой вариант самого модного цвета 2024 года</h3>
 
-			<h3>{{pick}}</h3>
+			<h3>{{slice pick}}</h3>
 
-			<button id=see_results>смотреть другие варианты</button>
+			<button id=see_results>ответы других участников</button>
 		</div>
 	</section>
 	<section id=results style="display: none;">
 		{{#each all_picks}}
 			<div style="background:{{this.color_value}};" alt="{{this.color_name}}">
+				<div class="desc">
+				<span> &nbsp;{{slice this.color_value}}</span><br>
 			   <a href={{this.user_link}}>
 			   		&nbsp;{{this.user_name}}
 			   </a>
+			   </div>
 			</div>
 		{{/each}}
 	</section>
@@ -90,8 +110,6 @@
 	<script type="text/javascript">
 
 		let pick = '{{pick}}'
-
-		// let all_picks = {{{all_picks}}}
 
 		const $ = str=>document.querySelectorAll(str) // str->array of el
 
@@ -106,6 +124,21 @@
 		document
 			.getElementById('see_results')
 				.addEventListener('click', e=>changeSection('results'))
+
+
+
+
+		layout=e=>{
+
+			$$('#results>div:nth-child(-n + 4)')(el=>el.style.height=`${innerHeight/2}px`)
+
+			id('slide').style.height=`${innerHeight}px`
+
+		}
+
+		layout(null)
+
+		addEventListener('resize',layout)
 
 
 

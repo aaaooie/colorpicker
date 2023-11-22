@@ -4,12 +4,15 @@ const fs = require('fs')
 const express = require('express')
 const serveStatic = require('serve-static')
 const bodyParser = require('body-parser')
+const hbs = require('hbs')
 
 const app = express()
 
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use(serveStatic('client'))
+
+hbs.registerHelper('slice', s=>s.slice(1))
 
 app.set('view engine', 'hbs')
 
@@ -26,8 +29,8 @@ let upsert=arr=>el=>{
 	let found = arr.map(_key).indexOf(_key(el))
 
 	if (-1==found) {
-		arr.push(el)
-		return arr
+		// arr.push(el)
+		return [el].concat(arr)
 	} else {
 
 		let _existing= arr[found]
