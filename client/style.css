@@ -41,14 +41,10 @@ bottom: 8px;*/
 
 body>section {
 
-/*	height: 1000px;*/
 	margin: auto;
 	width: 100%;
 
-	max-width: 928px;
-
 	position: relative;
-
 }
 
 
