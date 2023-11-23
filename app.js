@@ -44,17 +44,23 @@ let upsert=arr=>el=>{
 
 app.post('/',(req,res)=>{
 
-	data = upsert(data)(req.body)
+	let entry = Object.assign({
+			ip: req.ip,
+			time: new Date()
+		},
+		req.body
+	)
 
-	console.log(req.body)
+	data = upsert(data)(entry)
+
+	res.render('result',{
+		pick:req.body.color_value,
+		all_picks: data
+	})
 
 	fs.writeFile('data.json',JSON.stringify(data),{},e=>{
 
-		// res.sendStatus(200)
-		res.render('result',{
-			pick:req.body.color_value,
-			all_picks: data
-		})
+		if(e)console.log(e)
 
 	})
 
