@@ -328,13 +328,12 @@
 
 		let ondown=e=>{if(e.target.id=='slider'){
 			drag=true
-			e.target.style.cursor='drag'
+			e.target.style.cursor='move'
 			rr = id('brightcontrol').getBoundingClientRect()
 		}}
 		let onup=e=>{if(drag){
 			drag=false
 			id('slider').style.cursor='pointer'
-
 		}}
 
 
