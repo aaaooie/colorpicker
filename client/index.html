@@ -1,372 +1,495 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>цветовой тотализатор</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<style type="text/css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>цветовой тотализатор</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style type="text/css">
 
-		body {
-			overflow: hidden;
-			margin:0;
-			padding:0;
-		}
-		section {
-			width: 100%;
-			min-height: 100%;
-			align-items: center;
-  			justify-content: center;
+        body {
+            overflow: hidden;
+            margin:0;
+            padding:0;
+        }
+        section {
+            width: 100%;
+            min-height: 100%;
+            align-items: center;
+            justify-content: center;
 
-			max-width: 928px;
+            max-width: 928px;
 
-		}
+        }
 
-		#hi {
-			text-align: center;
-		}
+        #hi {
+            text-align: center;
+        }
 
-		#slide {
-			    margin: auto;
-		}
+        #slide {
+                margin: auto;
+        }
 
-		button#start {
-			margin:8px;
-			cursor: pointer;
-		}
+        button#start {
+            margin:8px;
+            cursor: pointer;
+        }
 
-		#color_selected {
+        #color_selected {
 
-			font-family: 'esh_v2';
-			font-style: normal;
-			font-weight: 400;
-			font-size: 40px;
-			line-height: 40px;
-			letter-spacing: -0.02em;
-			text-transform: lowercase;
+            font-family: 'esh_v2';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 40px;
+            line-height: 40px;
+            letter-spacing: -0.02em;
+            text-transform: lowercase;
 
-			color: #FFFFFF;
+            color: #FFFFFF;
 
-			margin-top: 0px;
-    		margin-bottom: 0px;
+            margin-top: 0px;
+            margin-bottom: 0px;
 
-		}
+        }
 
-		#_form {
-			margin: 8px;
-			display: none
-		}
+        #_form {
+            margin: 8px;
+            display: none
+        }
 
-		#_form input {
-			width: 100%;
-			width: calc(100% - 10px);
-    		margin: 0px 0px 12px 0px;
+        #_form input {
+            width: 100%;
+            width: calc(100% - 10px);
+            margin: 0px 0px 12px 0px;
 
-    		padding-left: 8px;
-    		padding-top: 2px;
-    		padding-bottom: 2px;
+            padding-left: 8px;
+            padding-top: 2px;
+            padding-bottom: 2px;
 
-    		border: 0;
+            border: 0;
 
-    		/* input */
+            /* input */
 
-			align-items: center;
+            align-items: center;
 
-			height: 24px;
+            height: 24px;
 
-			background: #FFFFFF;
-			font-family: 'Bitum';
-			font-style: normal;
-			font-weight: 400;
-			font-size: 16px;
-			line-height: 16px;
-			letter-spacing: -0.04em;
-			text-transform: lowercase;
+            background: #FFFFFF;
+            font-family: 'Bitum';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 16px;
+            letter-spacing: -0.04em;
+            text-transform: lowercase;
 
-		}
+        }
 
-		input:focus {outline:none;}
+        input:focus {outline:none;}
 
-		#send {
+        #send {
 
-			cursor: pointer;
+            cursor: pointer;
 
-			width: 100%;
-			background: white;
-			border-radius: 12px;
-			height: 24px;
-			border: 0;
-		}
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            height: 24px;
+            border: 0;
+        }
 
-		#color_selected {
-			margin-bottom: 12px;
-    		margin-top: 12px;
-		}
+        #color_selected {
+            margin-bottom: 12px;
+            margin-top: 12px;
+        }
 
-		#picker {
-			display: none;
-		}
+        #picker {
+            display: none;
+            position: absolute;
+            cursor: none;
+        }
 
 
-	</style>
+    </style>
 </head>
 <body>
 
 
-	<section id=hi>
+    <section id=hi>
 
-		<div id=slide>
-
-
-			<h1>Самый модный цвет 2024 года</h1>
-			<h2>Узнать, какой цвет года на&nbsp;самом деле люди считают самым модным, сравнить с&nbsp;тем&nbsp;какой получился у&nbsp;Pantone</h2>
-
-			<img src=logo.svg>
-		</div>
+        <div id=slide>
 
 
-		<button id=start>
-			выбрать
-		</button>
+            <h1>Самый модный цвет 2024 года</h1>
+            <h2>Узнать, какой цвет года на&nbsp;самом деле люди считают самым модным, сравнить с&nbsp;тем&nbsp;какой получился у&nbsp;Pantone</h2>
 
-	</section>
-	<section id=pick style="display: none;">
-
-		<div
-			id=colorpicker
-			style="background-color: gray;"
-
-		></div>
-
-		<div
-			id=brightcontrol
-			style=" background-color: black;"
-
-		>
-
-			<div id="slider"></div>
-		</div>
-
-		<div id="_form">
-
-			<form method=post action="" >
-				<h3 id=color_selected></h3>
-
-				<input
-					type="text" name="user_name"
-					placeholder="твоё имя"
-				/>
-				<input
-					type="text" name="user_link"
-					placeholder="ссылка на тебя"
-				/>
-
-				<input
-					type="text" name="color_name"
-					placeholder="название цвета"
-				/>
-
-				<input
-					id=color_value
-					type="hidden" name=color_value
-				/>
-
-				<button id=send>
-					отправить
-				</button>
+            <img src=logo.svg>
+        </div>
 
 
-			</form>
+        <button id=start>
+            выбрать
+        </button>
+
+    </section>
+    <section id=pick style="display: none;">
+
+        <div
+            id=colorpicker
+            style="background-color: gray;"
+
+        ></div>
+
+        <div
+            id=brightcontrol
+            style=" background-color: black;"
+
+        >
+
+            <div id="slider"></div>
+        </div>
+
+        <div id="_form">
+
+            <form method=post action="" >
+                <h3 id=color_selected></h3>
+
+                <input
+                    type="text" name="user_name"
+                    placeholder="твоё имя"
+                />
+                <input
+                    type="text" name="user_link"
+                    placeholder="ссылка на тебя"
+                />
+
+                <input
+                    type="text" name="color_name"
+                    placeholder="название цвета"
+                />
+
+                <input
+                    id=color_value
+                    type="hidden" name=color_value
+                />
+
+                <button id=send>
+                    отправить
+                </button>
 
 
-		</div>
+            </form>
 
-	</section>
 
-	<svg id=picker width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="1" y="1" width="22" height="22" rx="11" fill="#0500FF"/>
+        </div>
+
+    </section>
+
+    <svg id=picker width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect id="inner_picker" x="1" y="1" width="22" height="22" rx="11" fill="#0500FF"/>
 <rect x="1" y="1" width="22" height="22" rx="11" stroke="white" stroke-width="2"/>
 </svg>
 
 </body>
 
 
-	<script type="text/javascript">
+    <script type="text/javascript">
 
-		const $ = str=>document.querySelectorAll(str) // str->array of el
+        const $ = str=>document.querySelectorAll(str) // str->array of el
 
-		const $$ = str=>f=>Array.from($(str)).map(f)
+        const $$ = str=>f=>Array.from($(str)).map(f)
 
-		let id=s=>document.getElementById(s)
+        let id=s=>document.getElementById(s)
 
-		let state = null
+        let state = null
 
+        let draw =  e => {
 
+            let padding=16+16
 
+            let height = window.innerHeight-padding
 
-		let draw =  e => {
+            Array.from($('section')).map(el=>el.style.height=`${height}px`)
 
-			let padding=16+16
 
-			let height = window.innerHeight-padding
+            id('slide').style.height=`${height-42}px`
 
-			Array.from($('section')).map(el=>el.style.height=`${height}px`)
+            id('start').style.width=`${window.innerWidth-16}px`
 
+        }
 
-			id('slide').style.height=`${height-42}px`
+        draw(null)
 
-			id('start').style.width=`${window.innerWidth-16}px`
+        addEventListener('resize', draw);
 
-		}
+        let eyeDropper=null
 
-		draw(null)
+        if (window.EyeDropper) {
 
-		addEventListener('resize', draw);
+            eyeDropper = new EyeDropper()
+        }
 
-		let eyeDropper=null
+        let basic_color = '#ffffff'
+        let selected_color = '#ffffff'
+        let bright=1
 
-		if (window.EyeDropper) {
+        let set_brightness=color=>'#'+color
+            .slice(1)
+            .match(/.{1,2}/g)
+            .map(s=>parseInt(s,16))
+            .map(a=>Math.round(a*bright))
+            .map(n=>n.toString(16))
+            .map(s=>1==s.length?`0${s}`:s)
+            .join('')
 
-			eyeDropper = new EyeDropper()
-		}
+        let select_color = c=>{
 
-		let basic_color = '#ffffff'
-		let selected_color = '#ffffff'
-		let bright=1
+                selected_color=c
 
-		let set_brightness=color=>'#'+color
-			.slice(1)
-			.match(/.{1,2}/g)
-			.map(s=>parseInt(s,16))
-			.map(a=>Math.round(a*bright))
-			.map(n=>n.toString(16))
-			.map(s=>1==s.length?`0${s}`:s)
-			.join('')
+                $$('body')(el=>el.style.background=c)
 
-		let select_color = c=>{
+                $$('#_form input')(el=>el.style.color=c)
 
-				selected_color=c
+                id('color_selected').innerText=c.slice(1)
+                id('color_value').setAttribute('value',c)
 
-				$$('body')(el=>el.style.background=c)
+                id('send').style.color=c
 
-				$$('#_form input')(el=>el.style.color=c)
+                $$('body')(el=>el.innerHTML+=`<style>#_form input::placeholder{color:${c};}</style>`)
 
-				id('color_selected').innerText=c.slice(1)
-				id('color_value').setAttribute('value',c)
+                id('_form').style.display='block'
 
-				id('send').style.color=c
+                picker=id('picker')
 
-				$$('body')(el=>el.innerHTML+=`<style>#_form input::placeholder{color:${c};}</style>`)
 
-				id('_form').style.display='block'
+        }
 
-		}
+        let update_brightcontrol = (w)=>{
 
-		let update_brightcontrol = (w)=>{
+            let r = ((1-bright)*w)-10
 
-			let r = ((1-bright)*w)-10
+            if (r<0)r=0
+            if (r>w-22)r=w-22
 
-			if (r<0)r=0
-			if (r>w-22)r=w-22
+            id('slider').style.right=`${r}px`
 
-			id('slider').style.right=`${r}px`
+            select_color(set_brightness(basic_color))
+        }
 
-			select_color(set_brightness(basic_color))
-		}
+        let picking=false
 
+        let picker=id('picker')
 
-		let pick = event=>{
+        let color_shifts= [ // tone spectre encoded
+          [1,'+',0],
+          ['-',1,0],
+          [0,1,'+'],
+          [0,'-',1],
+          ['+',0,1],
+          [1,0,'-']
+        ]
 
-			if (event.target.id=='colorpicker') {
+        const get_color=(event)=>{
 
-				if (eyeDropper) {
+          let r=id('colorpicker').getBoundingClientRect() // fixme for performance
 
-					eyeDropper.open().then(selectedColor => {
-					    // console.log(typeof selectedColor) // { sRGBHex: '#008080' }
-					    console.log(selectedColor) // { sRGBHex: '#008080' }
+          let x=event.x-r.x
+          let y=event.y-r.y
 
-					    try{
-					    	basic_color=selectedColor.sRGBHex
-					    	console.log(id('brightcontrol').style)
+          if(y<0)y=0
+          if(y>r.height)y=r.height
 
+          let range=parseInt('ff',16) //256
 
-					    	id('brightcontrol').setAttribute('style',`background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
+          let stripe_width=r.width/color_shifts.length
 
-					    	select_color(set_brightness(basic_color))
+          let tone_shift = Math.floor(x/stripe_width)
 
+          let brightness = 1-y/r.height
 
-					    }catch (e) {
-					    	console.log(e)
-					    }
-					    return true
-					  }).catch(() => {
-						  console.log('eye dropper cancelled')
-					  })
-				}
+          let tone = color_shifts[tone_shift].map(i=>{
 
 
+            if ('string'==typeof i) {
+              let gradient=(x-tone_shift*stripe_width)/stripe_width
 
-			}
+              if('+'==i){
+                return range*gradient
+              }
+              if('-'==i){
+                return range*(1-gradient)
+              }
+            } else {
+              return i*range
+            }
+          })
 
-			if (event.target.id=='brightcontrol'
-				|| event.target.id=='slider') {
+          let _fixed = tone.map(i=>i+brightness*(range-i))//.map(i=>i.toString(16)).join('')
 
-				let r = id('brightcontrol').getBoundingClientRect()
+          let _color = _fixed.map(i=>Math.round(i).toString(16)).map(i=>{
+            if(i.length==1){
+              return '0'+i
+            } else return i})
+          .join('')
 
-				bright = (event.x-r.x)/r.width
+          // console.log(_color)
+          basic_color=`#${_color}`
 
-				update_brightcontrol(r.width)
+          id('brightcontrol').setAttribute(
+              'style',
+              `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
 
-			}
-		}
+          select_color(set_brightness(basic_color))
 
-		addEventListener('click',pick)
+          // select_color(`#${_color}`)
 
-		let drag = false
+          return `#${_color}`
 
-		let rr = id('brightcontrol').getBoundingClientRect()
+        }
 
-		let ondown=e=>{if(e.target.id=='slider'){
-			drag=true
-			e.target.style.cursor='move'
-			rr = id('brightcontrol').getBoundingClientRect()
-		}}
-		let onup=e=>{if(drag){
-			drag=false
-			id('slider').style.cursor='pointer'
-		}}
+        // let _colorpicker=id('colorpicker')
 
 
-		// console.log(rr)
+        let pick = event=>{
 
-		let onmove=e=>{
-			if (drag){
+          // if (eyeDropper) {
 
+          //     eyeDropper.open().then(selectedColor => {
 
-				bright = (e.x-rr.x)/rr.width
+          //         basic_color=selectedColor.sRGBHex
 
-				if(bright>1)bright=1
-				if(bright<0)bright=0
+          //         id('brightcontrol').setAttribute(
+          //             'style',
+          //             `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
 
-				update_brightcontrol(rr.width)
-			}
-		}
+          //         select_color(set_brightness(basic_color))
 
 
-		addEventListener('mousedown', ondown)
-		addEventListener('mouseup', onup)
-		addEventListener('mousemove', onmove)
+          //       }).catch(() => {
+          //           console.log('eye dropper cancelled')
+          //       })
 
-		const changeSection = name=>
-			$$('section')(el=>
-					el.style.display=el.id==name?'block':'none')
+          //       return
+          // }
 
-		document
-			.getElementById('start')
-				.addEventListener('click', e=>changeSection('pick'))
+            if (event.target.id=='inner_picker') {
 
-		changeSection('pick')
+              picking=false
+              picker.style.cursor='default'
 
-	</script>
+              let basic_color=get_color(event)
+
+              id('inner_picker').setAttribute('fill',basic_color)
+
+
+              select_color(set_brightness(basic_color))
+
+              // select_color()
+            }
+
+            if (event.target.id=='colorpicker') {
+
+                picker=id('picker')
+
+
+                if (!picking){
+
+                    picking=true
+
+                    picker.style.cursor='none'
+
+                    picker.style.display='block'
+
+                    picker.style.left=event.x-12
+                    picker.style.top=event.y-12
+
+                    let _c=get_color(event)
+
+                    console.log(_c)
+
+                    id('inner_picker').setAttribute('fill',_c)
+
+                }
+            }
+
+            if (event.target.id=='brightcontrol'
+                || event.target.id=='slider') {
+
+                let r = id('brightcontrol').getBoundingClientRect()
+
+                bright = (event.x-r.x)/r.width
+
+                update_brightcontrol(r.width)
+
+            }
+        }
+
+        addEventListener('click',pick)
+
+        let drag = false
+
+        let rr = id('brightcontrol').getBoundingClientRect()
+
+        let ondown=e=>{if(e.target.id=='slider'){
+            drag=true
+            e.target.style.cursor='move'
+            rr = id('brightcontrol').getBoundingClientRect()
+        }}
+        let onup=e=>{if(drag){
+            drag=false
+            id('slider').style.cursor='pointer'
+        }}
+
+
+        // console.log(rr)
+
+        let onmove=e=>{
+
+            // console.log(picking)
+
+            if (picking){
+
+                let culer =get_color(e)
+
+                let r=id('colorpicker').getBoundingClientRect() // fixme for performance
+
+                let y=e.y
+                if (y>r.height)y=r.height
+
+                picker.style.left=e.x-12
+                picker.style.top=y-12
+
+                id('inner_picker').setAttribute('fill',culer)
+            }
+
+            if (drag){
+
+
+                bright = (e.x-rr.x)/rr.width
+
+                if(bright>1)bright=1
+                if(bright<0)bright=0
+
+                update_brightcontrol(rr.width)
+            }
+
+        }
+
+
+        addEventListener('mousedown', ondown)
+        addEventListener('mouseup', onup)
+        addEventListener('mousemove', onmove)
+
+        const changeSection = name=>
+            $$('section')(el=>
+                    el.style.display=el.id==name?'block':'none')
+
+        document
+            .getElementById('start')
+                .addEventListener('click', e=>changeSection('pick'))
+
+        changeSection('pick')
+
+    </script>
 
 </html>
