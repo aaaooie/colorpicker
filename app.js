@@ -41,6 +41,40 @@ let upsert=arr=>el=>{
 	}
 }
 
+// app.get('/demo',(req,res)=>{
+
+// 	res.render('result',{})
+// })
+
+
+const to_n=c=>parseInt(c.color_value.slice(1),16)
+
+
+const RGBToHSB = (r, g, b) => {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  const v = Math.max(r, g, b),
+    n = v - Math.min(r, g, b);
+  const h =
+    n === 0 ? 0 : n && v === r ? (g - b) / n : v === g ? 2 + (b - r) / n : 4 + (r - g) / n;
+  return [60 * (h < 0 ? h + 6 : h), v && (n / v) * 100, v * 100];
+
+}
+
+
+const to_hsb=c=>{
+
+	let [r,g,b]=c.color_value.slice(1)
+        .match(/.{1,2}/g)
+        .map(s=>parseInt(s,16))
+
+    return RGBToHSB(r,g,b)
+
+
+
+}
+
 
 app.post('/',(req,res)=>{
 
@@ -53,9 +87,19 @@ app.post('/',(req,res)=>{
 
 	data = upsert(data)(entry)
 
-	res.render('result',{
+	let sorted=[...data].sort((a,b)=>{
+
+			let [ha,sa,ba] = to_hsb(a)
+			let [hb,sb,bb] = to_hsb(b)
+
+			return (ha-hb)//+(sa-sb)+(ba-bb)
+
+		})
+
+	res.render('demo',{ // 'result'
 		pick:req.body.color_value,
-		all_picks: data
+		all_picks: sorted,//data,
+		picks_count: data.length
 	})
 
 	fs.writeFile('data.json',JSON.stringify(data),{},e=>{
@@ -70,3 +114,5 @@ app.post('/',(req,res)=>{
 })
 
 app.listen(3333)
+
+console.log('http://localhost:3333/')

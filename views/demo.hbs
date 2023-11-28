@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>цветовой тотализатор</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style type="text/css">
+
+		body {
+/*			overflow: hidden;*/
+			margin:0;
+			padding:0;
+		}
+		section {
+			width: 100%;
+/*			height: 999999px;*/
+/*			align-items: center;
+  			justify-content: center;
+*/
+			color: white;
+		}
+
+		h3 {
+		 padding: 0;
+		 margin: 0;
+		}
+
+		#slide {
+			    margin: auto;
+		}
+
+		button#see_results {
+			margin:8px;
+
+			width: calc(100% - 16px);
+			background: white;
+			border-radius: 12px;
+			height: 24px;
+			border: 0;
+
+			cursor:pointer;
+
+			position: absolute;
+			bottom:0px;
+		}
+
+		#results>div {
+			display: inline-flex;
+/*			width: 25%;*/
+/*			min-height: 200px;*/
+/*			height: 100%;*/
+			margin: -2px;
+			padding: 0;
+			border: 0px solid;
+			box-sizing: border-box;
+
+			color: white;
+
+
+		}
+
+		.desc{display: :none;}
+
+		#results>div>.desc {
+			display: block;
+  			align-self: flex-end;
+			color:white;
+		}
+		#results>div>.desc>a {
+			color:white;
+			text-decoration: none;
+		}
+		#results {
+			padding-left:2px;
+		}
+
+
+	</style>
+</head>
+<body>
+
+
+
+
+	<section id=response style="display: block; background: {{pick}};">
+
+		<div id=slide>
+			<h3>Мы получили твой вариант самого модного цвета 2024 года</h3>
+
+			<h3>{{slice pick}}</h3>
+
+			<button id=see_results>ответы других участников</button>
+		</div>
+	</section>
+	<section id=results style="display: none;">
+		{{#each all_picks}}
+			<div class="sq" style="background:{{this.color_value}};" alt="{{this.color_name}}">
+
+			</div>
+		{{/each}}
+	</section>
+
+</body>
+
+
+	<script type="text/javascript">
+
+		let pick = '{{pick}}'
+
+		let picks_count=Number({{picks_count}})
+
+		const $ = str=>document.querySelectorAll(str) // str->array of el
+
+		const $$ = str=>f=>Array.from($(str)).map(f)
+
+		let id=s=>document.getElementById(s)
+
+		const changeSection = name=>
+			$$('section')(el=>
+					el.style.display=el.id==name?'block':'none')
+
+		document
+			.getElementById('see_results')
+				.addEventListener('click', e=>changeSection('results'))
+
+
+
+
+		layout=e=>{
+
+
+			let quantity = Math.ceil(Math.sqrt(picks_count))
+
+			let w=innerWidth/quantity
+			let h=2+innerHeight/quantity
+
+
+
+			// id('slide').style.height=`${innerHeight}px`
+
+
+			$$('body')(el=>el.innerHTML+=`<style>.sq {width:${w}px !important; height:${h}px !important;}</style>`)
+
+
+			// $$('#results>div:nth-child(-n + 4)')(el=>el.style.height=`${innerHeight/2}px`)
+
+			// id('slide').style.height=`${innerHeight}px`
+
+		}
+
+		layout(null)
+
+		addEventListener('resize',layout)
+
+		changeSection('results')
+
+	</script>
+
+</html>

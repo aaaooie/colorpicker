@@ -1,9 +1,12 @@
 Next task
 
-- cookie to save vote
-- make 1000 picks demo
 - all colors sorted
 - proportional sizes
+[..] make 1000 picks demo
+- optimiztion for colorpicker speed performance
+- fonts
+- залить на сервер: настроить гит апдейт; настроить dns
 - better mobile layout: results screen: we got your result
+- cookie to save vote
 - real db
-- adapt desktop layout
+- adapt desktop layout: mobile first
