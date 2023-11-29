@@ -1,11 +1,17 @@
 Next task
 
-- all colors sorted
-- proportional sizes
-[..] make 1000 picks demo
+[,,,] current
+
 - optimiztion for colorpicker speed performance
-- fonts
-- залить на сервер: настроить гит апдейт; настроить dns
+- залить на сервер: настроить гит апдейт
+- настроить dns
+
+[...] make 1000 picks demo
+- all colors sorted: 2-d sort line by line
+- proportional sizes
+- проблема хвоста
+
+[,,,] the rest
 - better mobile layout: results screen: we got your result
 - cookie to save vote
 - real db

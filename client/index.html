@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>цветовой тотализатор</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Martian+Mono&display=swap');
+    </style>
     <link rel="stylesheet" type="text/css" href="style.css">
     <style type="text/css">
 
@@ -37,7 +40,6 @@
 
         #color_selected {
 
-            font-family: 'esh_v2';
             font-style: normal;
             font-weight: 400;
             font-size: 40px;
@@ -85,8 +87,6 @@
 
         }
 
-        input:focus {outline:none;}
-
         #send {
 
             cursor: pointer;
@@ -123,7 +123,7 @@
             <h1>Самый модный цвет 2024 года</h1>
             <h2>Узнать, какой цвет года на&nbsp;самом деле люди считают самым модным, сравнить с&nbsp;тем&nbsp;какой получился у&nbsp;Pantone</h2>
 
-            <img src=logo.svg>
+            <img class="logo" src=logo.svg>
         </div>
 
 
@@ -185,311 +185,287 @@
 
     </section>
 
-    <svg id=picker width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect id="inner_picker" x="1" y="1" width="22" height="22" rx="11" fill="#0500FF"/>
-<rect x="1" y="1" width="22" height="22" rx="11" stroke="white" stroke-width="2"/>
+<svg id=picker width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect id="inner_picker" x="1" y="1" width="22" height="22" rx="11" fill="#0500FF"/>
+  <rect x="1" y="1" width="22" height="22" rx="11" stroke="white" stroke-width="2"/>
 </svg>
 
 </body>
 
+<script type="text/javascript">
 
-    <script type="text/javascript">
+  //helpers
 
-        const $ = str=>document.querySelectorAll(str) // str->array of el
+  const $ = str=>document.querySelectorAll(str) // str->array of el
 
-        const $$ = str=>f=>Array.from($(str)).map(f)
+  const $$ = str=>f=>Array.from($(str)).map(f)
 
-        let id=s=>document.getElementById(s)
+  let id=s=>document.getElementById(s)
 
-        let state = null
+  // layout function
 
-        let draw =  e => {
+  let draw=e=> {
 
-            let padding=16+16
+    let padding=16+16
 
-            let height = window.innerHeight-padding
+    let height = window.innerHeight-padding
 
-            Array.from($('section')).map(el=>el.style.height=`${height}px`)
+    Array.from($('section')).map(el=>el.style.height=`${height}px`)
 
 
-            id('slide').style.height=`${height-42}px`
+    id('slide').style.height=`${height-42}px`
 
-            id('start').style.width=`${window.innerWidth-16}px`
+    id('start').style.width=`${window.innerWidth-16}px`
 
-        }
+  }
 
-        draw(null)
+  draw(null)
 
-        addEventListener('resize', draw);
+  addEventListener('resize', draw);
 
-        let eyeDropper=null
+  // build-in eyeDropper, depricated
 
-        if (window.EyeDropper) {
+  // let eyeDropper=null
 
-            eyeDropper = new EyeDropper()
-        }
+  // if (window.EyeDropper) {
 
-        let basic_color = '#ffffff'
-        let selected_color = '#ffffff'
-        let bright=1
+  //     eyeDropper = new EyeDropper()
+  // }
 
-        let set_brightness=color=>'#'+color
-            .slice(1)
-            .match(/.{1,2}/g)
-            .map(s=>parseInt(s,16))
-            .map(a=>Math.round(a*bright))
-            .map(n=>n.toString(16))
-            .map(s=>1==s.length?`0${s}`:s)
-            .join('')
+  let basic_color = '#ffffff'
+  let selected_color = '#ffffff'
+  let bright=1
 
-        let select_color = c=>{
+  let set_brightness=color=>'#'+color
+    .slice(1)
+    .match(/.{1,2}/g)
+    .map(s=>parseInt(s,16))
+    .map(a=>Math.round(a*bright))
+    .map(n=>n.toString(16))
+    .map(s=>1==s.length?`0${s}`:s)
+    .join('')
 
-                selected_color=c
+  let select_color =c=>{
 
-                $$('body')(el=>el.style.background=c)
+    selected_color=c
 
-                $$('#_form input')(el=>el.style.color=c)
+    $$('body')(el=>el.style.background=c)
 
-                id('color_selected').innerText=c.slice(1)
-                id('color_value').setAttribute('value',c)
+    $$('#_form input')(el=>el.style.color=c)
 
-                id('send').style.color=c
+    id('color_selected').innerText=c.slice(1)
+    id('color_value').setAttribute('value',c)
 
-                $$('body')(el=>el.innerHTML+=`<style>#_form input::placeholder{color:${c};}</style>`)
+    id('send').style.color=c
 
-                id('_form').style.display='block'
+    $$('body')(el=>el.innerHTML+=`<style>#_form input::placeholder{color:${c};}</style>`) // fixme: add throttling
 
-                picker=id('picker')
+    id('_form').style.display='block'
 
+    picker=id('picker')
 
-        }
+  }
 
-        let update_brightcontrol = (w)=>{
+  let update_brightcontrol = (w)=>{
 
-            let r = ((1-bright)*w)-10
+    let r = ((1-bright)*w)-10
 
-            if (r<0)r=0
-            if (r>w-22)r=w-22
+    if (r<0)r=0
+    if (r>w-22)r=w-22
 
-            id('slider').style.right=`${r}px`
+    id('slider').style.right=`${r}px`
 
-            select_color(set_brightness(basic_color))
-        }
+    select_color(set_brightness(basic_color))
+  }
 
-        let picking=false
+  let picking=false
 
-        let picker=id('picker')
+  let picker=id('picker')
 
-        let color_shifts= [ // tone spectre encoded
-          [1,'+',0],
-          ['-',1,0],
-          [0,1,'+'],
-          [0,'-',1],
-          ['+',0,1],
-          [1,0,'-']
-        ]
+  let color_shifts= [ // tone spectre encoded
+    [1,'+',0],
+    ['-',1,0],
+    [0,1,'+'],
+    [0,'-',1],
+    ['+',0,1],
+    [1,0,'-']
+  ]
 
-        const get_color=(event)=>{
+  const get_color=(event)=>{
 
-          let r=id('colorpicker').getBoundingClientRect() // fixme for performance
+    let r=id('colorpicker').getBoundingClientRect() // fixme for performance
 
-          let x=event.x-r.x
-          let y=event.y-r.y
+    let x=event.x-r.x
+    let y=event.y-r.y
 
-          if(y<0)y=0
-          if(y>r.height)y=r.height
+    if(y<0)y=0
+    if(y>r.height)y=r.height
 
-          let range=parseInt('ff',16) //256
+    let range=parseInt('ff',16) //256
 
-          let stripe_width=r.width/color_shifts.length
+    let stripe_width=r.width/color_shifts.length
 
-          let tone_shift = Math.floor(x/stripe_width)
+    let tone_shift = Math.floor(x/stripe_width)
 
-          let brightness = 1-y/r.height
+    let brightness = 1-y/r.height
 
-          let tone = color_shifts[tone_shift].map(i=>{
+    let tone = color_shifts[tone_shift].map(i=>{
 
+      if ('string'==typeof i) {
+        let gradient=(x-tone_shift*stripe_width)/stripe_width
 
-            if ('string'==typeof i) {
-              let gradient=(x-tone_shift*stripe_width)/stripe_width
+        if('+'==i){ return range*gradient}
+        if('-'==i){ return range*(1-gradient)}
+      } else {
+        return i*range
+      }
+    })
 
-              if('+'==i){
-                return range*gradient
-              }
-              if('-'==i){
-                return range*(1-gradient)
-              }
-            } else {
-              return i*range
-            }
-          })
+    let _fixed = tone.map(i=>i+brightness*(range-i))
 
-          let _fixed = tone.map(i=>i+brightness*(range-i))//.map(i=>i.toString(16)).join('')
+    let _color = _fixed.map(i=>Math.round(i).toString(16)).map(i=>{
+      if(i.length==1){
+        return '0'+i
+      } else return i
+    })
+    .join('')
 
-          let _color = _fixed.map(i=>Math.round(i).toString(16)).map(i=>{
-            if(i.length==1){
-              return '0'+i
-            } else return i})
-          .join('')
 
-          // console.log(_color)
-          basic_color=`#${_color}`
+    basic_color=`#${_color}`
 
-          id('brightcontrol').setAttribute(
-              'style',
-              `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
+    id('brightcontrol').setAttribute(
+      'style',
+      `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
 
-          select_color(set_brightness(basic_color))
+    // fixme: setter in get function
 
-          // select_color(`#${_color}`)
+    select_color(set_brightness(basic_color))
 
-          return `#${_color}`
 
-        }
+    return `#${_color}`
 
-        // let _colorpicker=id('colorpicker')
+  }
 
+  let pick = event=>{
 
-        let pick = event=>{
+    // if (eyeDropper) {
+    //     eyeDropper.open().then(selectedColor => {
+    //         basic_color=selectedColor.sRGBHex
+    //         id('brightcontrol').setAttribute(
+    //             'style',
+    //             `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
+    //         select_color(set_brightness(basic_color))
+    //       }).catch(() => {
+    //           console.log('eye dropper cancelled')
+    //       })
+    //       return
+    // }
 
-          // if (eyeDropper) {
+    if (event.target.id=='inner_picker') {
 
-          //     eyeDropper.open().then(selectedColor => {
+      picking=false
+      picker.style.cursor='default'
 
-          //         basic_color=selectedColor.sRGBHex
+      let basic_color=get_color(event)
 
-          //         id('brightcontrol').setAttribute(
-          //             'style',
-          //             `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
+      id('inner_picker').setAttribute('fill',basic_color)
 
-          //         select_color(set_brightness(basic_color))
+      select_color(set_brightness(basic_color))
 
+    }
 
-          //       }).catch(() => {
-          //           console.log('eye dropper cancelled')
-          //       })
+    if (event.target.id=='colorpicker') {
 
-          //       return
-          // }
+      picker=id('picker')
 
-            if (event.target.id=='inner_picker') {
+      if (!picking){
 
-              picking=false
-              picker.style.cursor='default'
+        picking=true
 
-              let basic_color=get_color(event)
+        picker.style.cursor='none'
+        picker.style.display='block'
 
-              id('inner_picker').setAttribute('fill',basic_color)
+        picker.style.left=event.x-12
+        picker.style.top=event.y-12
 
+        let _c=get_color(event)
 
-              select_color(set_brightness(basic_color))
+        id('inner_picker').setAttribute('fill',_c)
 
-              // select_color()
-            }
+      }
+    }
 
-            if (event.target.id=='colorpicker') {
+    if (event.target.id=='brightcontrol'
+     || event.target.id=='slider') {
 
-                picker=id('picker')
+      let r = id('brightcontrol').getBoundingClientRect()
 
+      bright = (event.x-r.x)/r.width
 
-                if (!picking){
+      update_brightcontrol(r.width)
 
-                    picking=true
+    }
+  } // end pick
 
-                    picker.style.cursor='none'
+  addEventListener('click',pick)
 
-                    picker.style.display='block'
+  let drag = false
 
-                    picker.style.left=event.x-12
-                    picker.style.top=event.y-12
+  let rr = id('brightcontrol').getBoundingClientRect()
 
-                    let _c=get_color(event)
+  let ondown=e=>{if(e.target.id=='slider'){
+    drag=true
+    e.target.style.cursor='move'
+    rr = id('brightcontrol').getBoundingClientRect()
+  }}
 
-                    console.log(_c)
+  let onup=e=>{if(drag){
+    drag=false
+    id('slider').style.cursor='pointer'
+  }}
 
-                    id('inner_picker').setAttribute('fill',_c)
 
-                }
-            }
+  let onmove=e=>{
 
-            if (event.target.id=='brightcontrol'
-                || event.target.id=='slider') {
+    if (picking){
 
-                let r = id('brightcontrol').getBoundingClientRect()
+      let culer =get_color(e)
 
-                bright = (event.x-r.x)/r.width
+      let r=id('colorpicker').getBoundingClientRect() // fixme for performance
 
-                update_brightcontrol(r.width)
+      let y=e.y
+      if (y>r.height)y=r.height
 
-            }
-        }
+      picker.style.left=e.x-12
+      picker.style.top=y-12
 
-        addEventListener('click',pick)
+      id('inner_picker').setAttribute('fill',culer)
+    }
 
-        let drag = false
+    if (drag){
 
-        let rr = id('brightcontrol').getBoundingClientRect()
+      bright = (e.x-rr.x)/rr.width
 
-        let ondown=e=>{if(e.target.id=='slider'){
-            drag=true
-            e.target.style.cursor='move'
-            rr = id('brightcontrol').getBoundingClientRect()
-        }}
-        let onup=e=>{if(drag){
-            drag=false
-            id('slider').style.cursor='pointer'
-        }}
+      if(bright>1)bright=1
+      if(bright<0)bright=0
 
+      update_brightcontrol(rr.width)
+    }
 
-        // console.log(rr)
+  }
 
-        let onmove=e=>{
 
-            // console.log(picking)
+  addEventListener('mousedown', ondown)
+  addEventListener('mouseup', onup)
+  addEventListener('mousemove', onmove)
 
-            if (picking){
+  const changeSection=name=>
+      $$('section')(el=>el.style.display=el.id==name?'block':'none')
 
-                let culer =get_color(e)
+  id('start').addEventListener('click', e=>changeSection('pick'))
 
-                let r=id('colorpicker').getBoundingClientRect() // fixme for performance
+  // changeSection('pick')
 
-                let y=e.y
-                if (y>r.height)y=r.height
-
-                picker.style.left=e.x-12
-                picker.style.top=y-12
-
-                id('inner_picker').setAttribute('fill',culer)
-            }
-
-            if (drag){
-
-
-                bright = (e.x-rr.x)/rr.width
-
-                if(bright>1)bright=1
-                if(bright<0)bright=0
-
-                update_brightcontrol(rr.width)
-            }
-
-        }
-
-
-        addEventListener('mousedown', ondown)
-        addEventListener('mouseup', onup)
-        addEventListener('mousemove', onmove)
-
-        const changeSection = name=>
-            $$('section')(el=>
-                    el.style.display=el.id==name?'block':'none')
-
-        document
-            .getElementById('start')
-                .addEventListener('click', e=>changeSection('pick'))
-
-        changeSection('pick')
-
-    </script>
+</script>
 
 </html>

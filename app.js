@@ -19,36 +19,26 @@ app.set('view engine', 'hbs')
 
 let data = require('./data.json')
 
+const error_handler=e=>{if(e)console.log(e)}
 
-let upsert=arr=>el=>{
+const upsert=arr=>el=>{
 
-	let _key = o=>o.user_name+o.color_value
-	let _secondary = ['user_link', 'color_name']
+  let _key = o=>o.user_name+o.color_value
+  let _secondary = ['user_link', 'color_name']
 
+  let found = arr.map(_key).indexOf(_key(el))
 
-	let found = arr.map(_key).indexOf(_key(el))
+  if (-1==found) {
+    return [el].concat(arr)
+  } else {
 
-	if (-1==found) {
-		// arr.push(el)
-		return [el].concat(arr)
-	} else {
+    let _existing= arr[found]
 
-		let _existing= arr[found]
+    _secondary.forEach(k=>_existing[k]=el[k])
 
-		_secondary.forEach(k=>_existing[k]=el[k])
-
-		return arr
-	}
+    return arr
+  }
 }
-
-// app.get('/demo',(req,res)=>{
-
-// 	res.render('result',{})
-// })
-
-
-const to_n=c=>parseInt(c.color_value.slice(1),16)
-
 
 const RGBToHSB = (r, g, b) => {
   r /= 255;
@@ -62,55 +52,43 @@ const RGBToHSB = (r, g, b) => {
 
 }
 
-
 const to_hsb=c=>{
 
-	let [r,g,b]=c.color_value.slice(1)
-        .match(/.{1,2}/g)
-        .map(s=>parseInt(s,16))
+  let [r,g,b]=c.color_value.slice(1)
+    .match(/.{1,2}/g)
+    .map(s=>parseInt(s,16))
 
     return RGBToHSB(r,g,b)
-
-
-
 }
 
 
 app.post('/',(req,res)=>{
 
-	let entry = Object.assign({
-			ip: req.ip,
-			time: new Date()
-		},
-		req.body
-	)
+  let entry = Object.assign({
+      ip: req.ip,
+      time: new Date()
+    },
+    req.body // FIXME: add cookie checker
+  )
 
-	data = upsert(data)(entry)
+  data = upsert(data)(entry)
 
-	let sorted=[...data].sort((a,b)=>{
+  let sorted=[...data].sort((a,b)=>{
 
-			let [ha,sa,ba] = to_hsb(a)
-			let [hb,sb,bb] = to_hsb(b)
+    let [ha,sa,ba] = to_hsb(a)
+    let [hb,sb,bb] = to_hsb(b)
 
-			return (ha-hb)//+(sa-sb)+(ba-bb)
+    return (ha-hb)//+(sa-sb)+(ba-bb)
 
-		})
+  })
 
-	res.render('demo',{ // 'result'
-		pick:req.body.color_value,
-		all_picks: sorted,//data,
-		picks_count: data.length
-	})
+  res.render('demo',{ // 'result'
+    pick:req.body.color_value,
+    all_picks: sorted,//data,
+    picks_count: data.length
+  })
 
-	fs.writeFile('data.json',JSON.stringify(data),{},e=>{
-
-		if(e)console.log(e)
-
-	})
-
-
-
-
+  fs.writeFile('data.json',JSON.stringify(data),{},error_handler)
 })
 
 app.listen(3333)
