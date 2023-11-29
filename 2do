@@ -2,17 +2,44 @@ Next task
 
 [,,,] current
 
+- пофиксить css на странице результатов
 - optimiztion for colorpicker speed performance
-- залить на сервер: настроить гит апдейт
+- залить на сервер
+- настроить гит апдейт
+
+[,,,] сервер
+
 - настроить dns
 
-[...] make 1000 picks demo
+[,,,] результаты
+
+- подсветка своего варианта
+- подсветка других вариантов
+- сделать точное распределение голосов по экрану: переверстать на svg
 - all colors sorted: 2-d sort line by line
 - proportional sizes
 - проблема хвоста
+- переверстать страницу response
+
+[,,,] первый экран
+
+- верстка
+- заголовок
+- кнопка
+- смена цветов
+- курсор
+- страница: о нас
+
+
+[,,,] шеринг
+
+- о нас
+- колорпикер
+- страница результатов
 
 [,,,] the rest
-- better mobile layout: results screen: we got your result
+
 - cookie to save vote
+- better mobile layout: results screen: we got your result
 - real db
 - adapt desktop layout: mobile first

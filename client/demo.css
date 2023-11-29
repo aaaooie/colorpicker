@@ -1,0 +1,54 @@
+body {
+	margin:0;
+	padding:0;
+}
+
+section {
+	width: 100%;
+	color: white;
+}
+
+#slide {
+	margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    justify-content: center;
+}
+
+#picked {
+	text-transform: uppercase;
+}
+
+
+.align_top {
+	position: absolute;
+	top: 8px;
+}
+
+button#see_results {
+	margin:8px;
+
+	width: calc(100% - 16px);
+	background: white;
+	border-radius: 12px;
+	height: 24px;
+	border: 0;
+
+	cursor:pointer;
+
+	position: absolute;
+	bottom:0px;
+}
+
+#results>div {
+	display: inline-flex;
+
+	margin: -2px -6px;
+	padding: 0;
+	border: 0px solid;
+
+	color: white;
+}
