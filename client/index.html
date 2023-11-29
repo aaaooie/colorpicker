@@ -111,6 +111,7 @@
 
 
     </style>
+    <style type="text/css" id=inputstyler></style>
 </head>
 <body>
 
@@ -202,6 +203,14 @@
 
   let id=s=>document.getElementById(s)
 
+  // cache
+
+  const $colorpicker = id('colorpicker')
+
+  const inputstyler=id('inputstyler')
+
+  let rrr=$colorpicker.getBoundingClientRect()
+
   // layout function
 
   let draw=e=> {
@@ -258,7 +267,7 @@
 
     id('send').style.color=c
 
-    $$('body')(el=>el.innerHTML+=`<style>#_form input::placeholder{color:${c};}</style>`) // fixme: add throttling
+    inputstyler.innerText=`#_form input::placeholder{color:${c};}`
 
     id('_form').style.display='block'
 
@@ -293,7 +302,7 @@
 
   const get_color=(event)=>{
 
-    let r=id('colorpicker').getBoundingClientRect() // fixme for performance
+    let r=rrr
 
     let x=event.x-r.x
     let y=event.y-r.y
@@ -337,7 +346,7 @@
       'style',
       `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
 
-    // fixme: setter in get function
+    // refactorme: setter in get function
 
     select_color(set_brightness(basic_color))
 
@@ -361,10 +370,11 @@
     //       return
     // }
 
-    if (event.target.id=='inner_picker') {
+    if (picking) {
 
       picking=false
-      picker.style.cursor='default'
+      $colorpicker.style.cursor='default'
+      id('picker').style.cursor='default'
 
       let basic_color=get_color(event)
 
@@ -372,27 +382,27 @@
 
       select_color(set_brightness(basic_color))
 
+      return
+
     }
 
-    if (event.target.id=='colorpicker') {
+    if (event.target.id=='colorpicker'
+      || event.target.id=='inner_picker') {
 
-      picker=id('picker')
+      picking=true
 
-      if (!picking){
+      $colorpicker.style.cursor='none'
+      picker.style.cursor='none'
+      picker.style.display='block'
 
-        picking=true
+      picker.style.left=event.x-12
+      picker.style.top=event.y-12
 
-        picker.style.cursor='none'
-        picker.style.display='block'
+      let _c=get_color(event)
 
-        picker.style.left=event.x-12
-        picker.style.top=event.y-12
+      id('inner_picker').setAttribute('fill',_c)
 
-        let _c=get_color(event)
 
-        id('inner_picker').setAttribute('fill',_c)
-
-      }
     }
 
     if (event.target.id=='brightcontrol'
@@ -413,17 +423,23 @@
 
   let rr = id('brightcontrol').getBoundingClientRect()
 
-  let ondown=e=>{if(e.target.id=='slider'){
-    drag=true
-    e.target.style.cursor='move'
+  let ondown=e=>{
+
     rr = id('brightcontrol').getBoundingClientRect()
+    rrr = $colorpicker.getBoundingClientRect() // update
+
+    if(e.target.id=='slider'){
+
+      drag=true
+      e.target.style.cursor='move'
+      id('brightcontrol').style.cursor='move'
   }}
 
   let onup=e=>{if(drag){
     drag=false
+    id('brightcontrol').style.cursor='pointer'
     id('slider').style.cursor='pointer'
   }}
-
 
   let onmove=e=>{
 
@@ -431,10 +447,8 @@
 
       let culer =get_color(e)
 
-      let r=id('colorpicker').getBoundingClientRect() // fixme for performance
-
       let y=e.y
-      if (y>r.height)y=r.height
+      if (y>rrr.height)y=rrr.height
 
       picker.style.left=e.x-12
       picker.style.top=y-12
