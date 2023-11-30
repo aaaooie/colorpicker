@@ -1,25 +1,25 @@
-Next task
 
 [,,,] current
 
-- пофиксить css на странице результатов
-- optimiztion for colorpicker speed performance
-- залить на сервер
-- настроить гит апдейт
-
-[,,,] сервер
-
-- настроить dns
+- сделать точное распределение голосов по экрану: переверстать на svg
+- подсветка своего варианта
+- подсветка других вариантов
 
 [,,,] результаты
 
-- подсветка своего варианта
-- подсветка других вариантов
-- сделать точное распределение голосов по экрану: переверстать на svg
-- all colors sorted: 2-d sort line by line
-- proportional sizes
+- all colors sorted: 2-d sort line by line (hue+brightness)
 - проблема хвоста
 - переверстать страницу response
+- кнопка "переголосовать"
+
+[,,,] ux
+
+- поведение кружочка выбора цвета при ресайзе
+- cookie to save vote
+
+[,,,] demo
+
+- proportional sizes
 
 [,,,] первый экран
 
@@ -30,16 +30,27 @@ Next task
 - курсор
 - страница: о нас
 
-
 [,,,] шеринг
 
 - о нас
 - колорпикер
 - страница результатов
 
-[,,,] the rest
+[,,,] верстка
 
-- cookie to save vote
+- adapt desktop layout: mobile first for colorpicker
 - better mobile layout: results screen: we got your result
+
+[,,,] сервер
+
+- залить на сервер
+- настроить гит апдейт
+- настроить dns
 - real db
-- adapt desktop layout: mobile first
+
+[,,,] DONE
+
+x пофиксить css на странице результатов
+x optimiztion for colorpicker speed performance
+x убрать мигание курсоров в самом пикере и на на brightness control
+

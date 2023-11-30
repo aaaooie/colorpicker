@@ -8,6 +8,7 @@
       @import url('https://fonts.googleapis.com/css2?family=Martian+Mono&display=swap');
     </style>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="adaptive.css"> -->
     <style type="text/css">
 
         body {
@@ -355,6 +356,18 @@
 
   }
 
+  const stop_picker=()=>{
+    picking=false
+    $colorpicker.style.cursor='default'
+    id('picker').style.cursor='default'
+
+    basic_color=get_color(event)
+
+    id('inner_picker').setAttribute('fill',basic_color)
+
+    select_color(set_brightness(basic_color))
+  }
+
   let pick = event=>{
 
     // if (eyeDropper) {
@@ -372,15 +385,7 @@
 
     if (picking) {
 
-      picking=false
-      $colorpicker.style.cursor='default'
-      id('picker').style.cursor='default'
-
-      let basic_color=get_color(event)
-
-      id('inner_picker').setAttribute('fill',basic_color)
-
-      select_color(set_brightness(basic_color))
+      stop_picker()
 
       return
 
@@ -472,6 +477,10 @@
   addEventListener('mousedown', ondown)
   addEventListener('mouseup', onup)
   addEventListener('mousemove', onmove)
+
+  addEventListener('resize',e=>{
+    if (picking) stop_picker()
+  })
 
   const changeSection=name=>
       $$('section')(el=>el.style.display=el.id==name?'block':'none')
