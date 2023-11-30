@@ -1,25 +1,19 @@
 
 [,,,] current
 
-- сделать точное распределение голосов по экрану: переверстать на svg
 - подсветка своего варианта
 - подсветка других вариантов
 
 [,,,] результаты
 
 - all colors sorted: 2-d sort line by line (hue+brightness)
-- проблема хвоста
 - переверстать страницу response
 - кнопка "переголосовать"
 
 [,,,] ux
 
-- поведение кружочка выбора цвета при ресайзе
 - cookie to save vote
-
-[,,,] demo
-
-- proportional sizes
+- поведение кружочка выбора цвета при ресайзе
 
 [,,,] первый экран
 
@@ -30,16 +24,20 @@
 - курсор
 - страница: о нас
 
+[,,,] верстка
+
+- adapt desktop layout: mobile first for colorpicker
+- better mobile layout: results screen: we got your result
+
+[,,,] demo
+
+- proportional sizes
+
 [,,,] шеринг
 
 - о нас
 - колорпикер
 - страница результатов
-
-[,,,] верстка
-
-- adapt desktop layout: mobile first for colorpicker
-- better mobile layout: results screen: we got your result
 
 [,,,] сервер
 
@@ -50,7 +48,10 @@
 
 [,,,] DONE
 
+x проблема хвоста
+
 x пофиксить css на странице результатов
 x optimiztion for colorpicker speed performance
 x убрать мигание курсоров в самом пикере и на на brightness control
 
+x сделать точное распределение голосов по экрану: переверстать на svg

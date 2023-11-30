@@ -93,7 +93,23 @@ body>section {
 
 }
 
-#color_value {
+#color_selected {
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: -0.02em;
+
+    color: #FFFFFF;
+
+
+    margin-bottom: 12px;
+    margin-top: 12px;
+
 	color: white;
 	text-transform: uppercase;
+}
+
+#color_value {
 }

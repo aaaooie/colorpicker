@@ -10,6 +10,9 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="demo.css">
 
+	<script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" > </script>
+
+
 </head>
 <body>
 
@@ -27,14 +30,17 @@
 
 	<section id=results style="display: none;">
 
-		{{#each all_picks}}
+{{!-- 		{{#each all_picks}}
 			<div class="sq" style="background:{{this.color_value}};" alt="{{this.color_name}}">
 
 			</div>
-		{{/each}}
+		{{/each}} --}}
 	</section>
 
 </body>
+
+
+
 
 <script type="text/javascript">
 
@@ -43,6 +49,10 @@
 	let pick = '{{pick}}'
 
 	let picks_count=Number({{picks_count}})
+
+	let _data = {{{data_json}}}
+
+	// console.log(_data)
 
 	// helper functions
 
@@ -53,6 +63,135 @@
 	let id=s=>document.getElementById(s)
 
 
+
+  	// re-arrange data
+
+	let rows = Math.floor(Math.sqrt(picks_count))
+
+	let arranged = []
+
+	let tail_count = picks_count-rows*rows
+
+	let rows_length=[]
+
+	for (let i=0;i<rows;i++){
+		rows_length[i]=rows
+	}
+
+	for (let j=0;j<tail_count;j++){
+		let additor=Math.floor(rows*Math.random())
+		rows_length[additor]=rows_length[additor]+1
+	}
+
+
+	const RGBToHSB = (r, g, b) => {
+	  r /= 255;
+	  g /= 255;
+	  b /= 255;
+	  const v = Math.max(r, g, b),
+	    n = v - Math.min(r, g, b);
+	  const h =
+	    n === 0 ? 0 : n && v === r ? (g - b) / n : v === g ? 2 + (b - r) / n : 4 + (r - g) / n;
+	  return [60 * (h < 0 ? h + 6 : h), v && (n / v) * 100, v * 100];
+
+	}
+
+	const to_hsb=c=>{
+
+	  let [r,g,b]=c.color_value.slice(1)
+	    .match(/.{1,2}/g)
+	    .map(s=>parseInt(s,16))
+
+	    return RGBToHSB(r,g,b)
+	}
+
+	// first sort: by brightness
+
+	let sorted = [..._data].sort((a,b)=>{
+
+	    let [ha,sa,ba] = to_hsb(a)
+	    let [hb,sb,bb] = to_hsb(b)
+
+	    return (bb-ba)//+(sa-sb)+(ba-bb)
+
+	})
+
+	for (let i=0;i<rows;i++){
+		arranged[i]=[]
+		for(let j=0;j<rows_length[i];j++){
+
+			arranged[i].push(sorted.pop())
+		}
+	}
+	console.log('nothing is lost: ', 0==sorted.length)
+
+	// second sort: by hue
+
+	for (let i=0;i<rows;i++){
+
+		arranged[i].sort((a,b)=>{
+
+	    let [ha,sa,ba] = to_hsb(a)
+	    let [hb,sb,bb] = to_hsb(b)
+
+	    return (ha-hb)//+(sa-sb)+(ba-bb)
+		})
+	}
+
+
+	// console.log(arranged)
+
+	// svg
+
+
+	const draw_rectangles = (instant)=>{
+
+		id('results').innerHTML=''
+
+  		let draw = SVG().addTo('#results').size(innerWidth, innerHeight)
+
+		let _h=innerHeight/rows
+	  	let _w
+
+	  	for (let i=0;i<rows;i++){
+
+	  		_w=innerWidth/rows_length[i]
+
+	  		for(let j=0;j<rows_length[i];j++){
+
+	  			let rect = draw.rect(
+	              _w,
+	              _h
+	          	).attr({
+	            	x: _w*j,
+	            	y: _h*i
+	          	})
+
+	          	if (instant) {
+	          		rect.attr({fill:arranged[i][j].color_value})
+	          	} else {
+
+	          		rect .attr({
+	            		fill: pick,//arranged[i][j].color_value,
+		          	})
+		          	.animate({
+			            duration: 1200,
+		    	        delay: 0,
+		        	    when: 'now',
+			            wait: 100
+	  		        })
+	          		.attr({
+	          			fill:arranged[i][j].color_value,
+	          		})
+
+	          	}
+	  		}
+	  	}
+
+
+	}
+
+
 	// events
 
 	const changeSection=name=>
@@ -60,7 +199,12 @@
 				el.style.display=el.id==name?'block':'none')
 
 	addEventListener('click', e=>{
-		if (e.target.id=='see_results') {changeSection('results')}
+		if (e.target.id=='see_results') {
+
+
+			changeSection('results')
+			draw_rectangles()
+		}
 	})
 
 	layout=e=>{
@@ -72,15 +216,22 @@
 		let w=innerWidth/quantity
 		let h=2+innerHeight/quantity
 
-		$$('body')(el=>el.innerHTML+=`<style>.sq {width:${w}px !important; height:${h}px !important;}</style>`)
+		// $$('body')(el=>el.innerHTML+=`<style>.sq {width:${w}px !important; height:${h}px !important;}</style>`)
+
+
+
 
 	}
 
 	layout(null)
 
 	addEventListener('resize',layout)
+	addEventListener('resize',e=>draw_rectangles(true))
 
 	// changeSection('results')
+
+
+
 
 </script>
 

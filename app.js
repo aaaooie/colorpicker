@@ -85,6 +85,7 @@ app.post('/',(req,res)=>{
   res.render('demo',{ // 'result'
     pick:req.body.color_value,
     all_picks: sorted,//data,
+    data_json: JSON.stringify(data),//data,
     picks_count: data.length
   })
 
