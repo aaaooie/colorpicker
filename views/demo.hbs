@@ -35,8 +35,8 @@
 			<h3>Ответы</h3>
 		</div>
 
-		<div class="footer">
-            <img class="logo" src=logo.svg>
+		<div class="footer" >
+            <a href="https://eshgruppa.com/"><img class="logo" src=logo.svg></a>
 
 		</div>
 
@@ -48,7 +48,7 @@
 			</div>
 		{{/each}} --}}
 
-		<div id="lookup" >
+		<div id="lookup" style="display:none;">
 
 			<div id=color_view class="color"></div>
 			<div id=color_value class="text"></div>
@@ -133,7 +133,7 @@
 	    let [ha,sa,ba] = to_hsb(a)
 	    let [hb,sb,bb] = to_hsb(b)
 
-	    return (bb-ba)//+(sa-sb)+(ba-bb)
+	    return (ba-bb)//+(sa-sb)+(ba-bb)
 
 	})
 
@@ -144,7 +144,7 @@
 			arranged[i].push(sorted.pop())
 		}
 	}
-	console.log('nothing is lost: ', 0==sorted.length)
+	// console.log('nothing is lost: ', 0==sorted.length)
 
 	// second sort: by hue
 
@@ -155,7 +155,7 @@
 	    let [ha,sa,ba] = to_hsb(a)
 	    let [hb,sb,bb] = to_hsb(b)
 
-	    return (ha-hb)//+(sa-sb)+(ba-bb)
+	    return (hb-ha)//+(sa-sb)+(ba-bb)
 		})
 	}
 
@@ -191,7 +191,7 @@
 
 		if((x+112)>innerWidth)x=innerWidth-112
 
-		let y = event.clientY-172-5
+		let y = event.clientY-172-15
 
 		if(y<0)y=0
 
@@ -206,6 +206,8 @@
 		id('user_name').innerHTML=data.user_name
 		id('user_link').innerHTML=data.user_link
 
+		// $$('.footer')(el=>el.style.background=data.color_value)
+
 		// console.log(x,y,data,r)
 
 	}
@@ -218,11 +220,16 @@
 
 	const draw_rectangles = (instant)=>{
 
+
 		id('_map').innerHTML=''
 
-  		let draw = SVG().addTo('#_map').size(innerWidth, innerHeight)
+		id('results').style.height=innerHeight
 
-		let _h=innerHeight/rows
+		let padding=0//48
+
+  		let draw = SVG().addTo('#_map').size(innerWidth, innerHeight-padding)
+
+		let _h=(innerHeight-padding)/rows
 	  	let _w
 
 	  	for (let i=0;i<rows;i++){
@@ -232,8 +239,8 @@
 	  		for(let j=0;j<rows_length[i];j++){
 
 	  			let rect = draw.rect(
-	              _w,
-	              _h
+	              _w+0.5,
+	              _h+0.5
 	          	).attr({
 	            	x: _w*j,
 	            	y: _h*i
@@ -247,7 +254,7 @@
 	            		fill: pick,//arranged[i][j].color_value,
 		          	})
 		          	.animate({
-			            duration: 1200,
+			            duration: 600,
 		    	        delay: 0,
 		        	    when: 'now',
 			            wait: 100
