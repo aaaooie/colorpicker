@@ -30,11 +30,32 @@
 
 	<section id=results style="display: none;">
 
+		<div class="header">
+			<h3>Самый модный цвет 2024 года</h3>
+			<h3>Ответы</h3>
+		</div>
+
+		<div class="footer">
+            <img class="logo" src=logo.svg>
+
+		</div>
+
+		<div id="_map"></div>
+
 {{!-- 		{{#each all_picks}}
 			<div class="sq" style="background:{{this.color_value}};" alt="{{this.color_name}}">
 
 			</div>
 		{{/each}} --}}
+
+		<div id="lookup" >
+
+			<div id=color_view class="color"></div>
+			<div id=color_value class="text"></div>
+			<div id=user_name class="text"></div>
+			<div id=user_link class="text"></div>
+		</div>
+
 	</section>
 
 </body>
@@ -139,6 +160,57 @@
 	}
 
 
+	let lookup_shown=false,lookup_x,lookup_y
+
+
+	const show_lookup=(e,data)=>{
+
+		const lookup=id('lookup')
+
+		// console.log('sdfsdf')
+
+		if (lookup_shown) {
+
+			console.log(lookup_x-e.clientX)
+			console.log(lookup_y-e.clientY)
+
+			if((Math.abs(lookup_x-e.clientX)<5)
+			 &&(Math.abs(lookup_y-e.clientY)<5)){
+
+				lookup.style.display='none'
+				lookup_shown=false
+				return
+			}
+		}
+
+		lookup_shown=true
+		lookup_x=e.clientX
+		lookup_y=e.clientY
+
+		let x = event.clientX + 5
+
+		if((x+112)>innerWidth)x=innerWidth-112
+
+		let y = event.clientY-172-5
+
+		if(y<0)y=0
+
+
+		lookup.style.display='flex'
+
+		lookup.style.top=`${y}px`
+		lookup.style.left=`${x}px`
+
+		id('color_view').style.background=data.color_value
+		id('color_value').innerHTML=data.color_value.slice(1)
+		id('user_name').innerHTML=data.user_name
+		id('user_link').innerHTML=data.user_link
+
+		// console.log(x,y,data,r)
+
+	}
+
+
 	// console.log(arranged)
 
 	// svg
@@ -146,9 +218,9 @@
 
 	const draw_rectangles = (instant)=>{
 
-		id('results').innerHTML=''
+		id('_map').innerHTML=''
 
-  		let draw = SVG().addTo('#results').size(innerWidth, innerHeight)
+  		let draw = SVG().addTo('#_map').size(innerWidth, innerHeight)
 
 		let _h=innerHeight/rows
 	  	let _w
@@ -185,6 +257,12 @@
 	          		})
 
 	          	}
+
+	          	rect.on('click', e=>{
+
+	          		// hide_lookup()
+	          		show_lookup(e, arranged[i][j])
+	          	})
 	  		}
 	  	}
 
@@ -199,6 +277,16 @@
 				el.style.display=el.id==name?'block':'none')
 
 	addEventListener('click', e=>{
+
+		if (lookup_shown) {
+			if((e.target.tagName!=='rect')
+			 &&(null==e.target.closest('#lookup'))) {
+				lookup_shown=false
+				id('lookup').style.display='none'
+			}
+		}
+
+
 		if (e.target.id=='see_results') {
 
 
