@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>цветовой тотализатор</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Martian+Mono&display=swap');
+    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="first.css">
+
+    <style type="text/css" id=inputstyler></style>
+</head>
+<body class="third">
+
+
+    <section id=hi style='cursor:none;'>
+{{!--
+        <img src="pipetka.svg" id=dropper />
+        <img src="trendiest.svg" id=word_trendiest />
+        <img src="color.svg" id=word_color />
+        <img src="2024.svg" id=word_2024 />
+ --}}
+        <div class="cta">
+
+            <h2 class="description">Узнать, какой цвет года на&nbsp;самом деле люди считают самым модным, сравнить с&nbsp;тем&nbsp;какой получился у&nbsp;Pantone</h2>
+
+
+            <button id=start>
+                выбрать
+            </button>
+
+        </div>
+
+
+    </section>
+    <section id=pick style="display: none;">
+
+
+        <div
+            id=colorpicker
+            style="background-color: gray;"
+
+        ></div>
+
+        <div
+            id=brightcontrol
+            style=" background-color: black;"
+
+        >
+
+            <div id="slider"></div>
+        </div>
+
+        <div id="_form">
+
+            <form method=post action="" >
+                <h3 id=color_selected></h3>
+
+                <input
+                    type="text" name="user_name"
+                    placeholder="твоё имя"
+                />
+                <input
+                    type="text" name="user_link"
+                    placeholder="ссылка на тебя"
+                />
+
+                <input
+                    type="text" name="color_name"
+                    placeholder="название цвета"
+                />
+
+                <input
+                    id=color_value
+                    type="hidden" name=color_value
+                />
+
+                <button id=send>
+                    отправить
+                </button>
+
+
+            </form>
+
+
+        </div>
+
+    </section>
+
+<svg id=picker width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect id="inner_picker" x="1" y="1" width="22" height="22" rx="11" fill="#0500FF"/>
+  <rect x="1" y="1" width="22" height="22" rx="11" stroke="white" stroke-width="2"/>
+</svg>
+
+<svg id="word_color" width="567" height="171" viewBox="0 0 567 171" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M96.36 93.96C95.16 75.96 81 68.04 63.96 68.04C46.92 68.04 27.48 84.6 27.48 105C27.48 125.4 46.92 141.96 63.96 141.96C79.08 141.96 89.64 130.68 96.84 118.2L121.08 131.4C109.56 154.44 90.6 167.4 63.96 168.84C27.48 170.76 0.6 134.04 0.6 105C0.6 75.96 27.48 41.16 63.96 41.16C94.68 41.16 125.4 61.56 125.4 93.96H96.36ZM127.753 105C127.753 75.96 157.033 40.92 193.513 41.16C229.993 41.4 259.273 75.96 259.273 105C259.273 134.04 229.993 168.84 193.513 168.84C157.033 168.84 127.753 134.04 127.753 105ZM154.633 105C154.633 125.4 176.473 141.96 193.513 141.96C210.553 141.96 232.393 125.4 232.393 105C232.393 84.6 210.553 68.28 193.513 68.04C176.473 67.8 154.633 84.6 154.633 105ZM272.503 0.599985H298.903V165H272.503V0.599985ZM312.216 105C312.216 75.96 341.496 40.92 377.976 41.16C414.456 41.4 443.736 75.96 443.736 105C443.736 134.04 414.456 168.84 377.976 168.84C341.496 168.84 312.216 134.04 312.216 105ZM339.096 105C339.096 125.4 360.936 141.96 377.976 141.96C395.016 141.96 416.856 125.4 416.856 105C416.856 84.6 395.016 68.28 377.976 68.04C360.936 67.8 339.096 84.6 339.096 105ZM535.686 107.16C538.326 99 539.766 91.32 539.766 83.88C539.766 74.04 537.366 69.24 531.126 69.24C524.406 69.24 516.966 76.2 507.366 97.32C497.526 118.92 490.806 135.24 480.966 165H456.966V45H480.966C480.966 72.12 480.726 86.76 477.366 110.04L479.286 110.52C487.686 83.4 499.686 41.16 534.966 41.16C554.406 41.16 566.166 54.36 566.166 81C566.166 89.88 564.486 101.4 561.126 111.96L535.686 107.16Z" fill="#F1D8BA"/>
+</svg>
+
+<svg id="dropper" width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M55.4788 4.20718L15.7692 43.9168C11.3715 48.3145 8.90087 54.2791 8.90087 60.4984C8.90087 60.7877 8.81522 61.0706 8.65472 61.3114L0.735763 73.1898C-0.42248 74.9271 -0.193416 77.2405 1.28305 78.7169C2.75952 80.1934 5.07288 80.4225 6.81024 79.2642L18.6886 71.3453C18.9294 71.1848 19.2122 71.0992 19.5016 71.0992C25.7209 71.0992 31.6855 68.6286 36.0833 64.2308L75.7928 24.5212C78.4866 21.8274 80 18.1738 80 14.3642C80 6.43108 73.5689 0 65.6358 0C61.8262 0 58.1726 1.51337 55.4788 4.20718Z" fill="#F1D8BA"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.28305 78.7169L4.15589 75.8441C4.26293 75.9511 4.43064 75.9678 4.55659 75.8838L16.435 67.9649L18.6886 71.3453L6.81024 79.2642C5.07288 80.4225 2.75952 80.1934 1.28305 78.7169ZM18.6886 71.3453L16.435 67.9649C17.3431 67.3595 18.4101 67.0364 19.5016 67.0364C24.6434 67.0364 29.5746 64.9938 33.2104 61.358L72.92 21.6484C74.8519 19.7165 75.9372 17.0963 75.9372 14.3642C75.9372 8.6749 71.3251 4.06281 65.6358 4.06281C62.9037 4.06281 60.2835 5.14813 58.3516 7.08002L18.642 46.7896C15.0062 50.4254 12.9637 55.3566 12.9637 60.4984C12.9637 61.5898 12.6406 62.6569 12.0352 63.565L4.11622 75.4434C4.03225 75.5694 4.04886 75.7371 4.15589 75.8441L1.28305 78.7169C-0.193416 77.2405 -0.42248 74.9271 0.735763 73.1898L8.65472 61.3114C8.81522 61.0706 8.90087 60.7877 8.90087 60.4984C8.90087 54.2791 11.3715 48.3145 15.7692 43.9168L55.4788 4.20718C58.1726 1.51337 61.8262 0 65.6358 0C73.5689 0 80 6.43108 80 14.3642C80 18.1738 78.4866 21.8274 75.7928 24.5212L36.0833 64.2308C31.6855 68.6286 25.7209 71.0992 19.5016 71.0992C19.2122 71.0992 18.9294 71.1848 18.6886 71.3453Z" fill="#F1D8BA"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M36.4991 7.28418C38.0857 5.69756 40.6581 5.69756 42.2448 7.28418L72.7158 37.7553C74.3025 39.3419 74.3025 41.9143 72.7158 43.5009C71.1292 45.0876 68.5568 45.0876 66.9702 43.5009L36.4991 13.0299C34.9125 11.4432 34.9125 8.87081 36.4991 7.28418Z" fill="#F1D8BA"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M64.7645 35.5496L75.7928 24.5212C78.4866 21.8274 80 18.1738 80 14.3642C80 6.43108 73.5689 0 65.6358 0C61.8262 0 58.1726 1.51337 55.4788 4.20718L44.4504 15.2355L64.7645 35.5496Z" fill="#F1D8BA"/>
+</svg>
+
+<svg id="word_trendiest" width="1023" height="173" viewBox="0 0 1023 173" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.6 31V4.59999H97.32V31H62.28V169H35.88V31H0.6ZM189.148 111.16C191.788 103 193.228 95.32 193.228 87.88C193.228 78.04 190.828 73.24 184.588 73.24C177.868 73.24 170.428 80.2 160.828 101.32C150.988 122.92 144.268 139.24 134.428 169H110.428V49H134.428C134.428 76.12 134.188 90.76 130.828 114.04L132.748 114.52C141.148 87.4 153.148 45.16 188.428 45.16C207.868 45.16 219.628 58.36 219.628 85C219.628 93.88 217.948 105.4 214.588 115.96L189.148 111.16ZM220.716 113.56C220.716 76.6 250.716 45.16 287.676 45.16C314.076 45.16 327.516 62.44 327.516 83.8C327.516 110.44 301.116 136.36 259.356 141.4V143.08C264.156 145.72 272.556 147.88 278.076 147.88C291.276 147.88 305.436 142.84 318.396 134.2L328.956 157.24C315.996 165.16 299.676 172.84 280.476 172.84C243.276 172.84 220.716 148.36 220.716 113.56ZM245.916 121.24C276.156 114.52 300.636 97.24 300.636 84.28C300.636 77.08 295.596 70.6 285.996 70.6C260.076 70.6 244.716 97.96 245.916 121.24ZM459.99 169H433.59V99.88C433.59 79 429.75 73.24 421.59 73.24C414.87 73.24 408.39 80.44 400.95 93.4C390.39 111.88 376.23 147.16 369.75 169H345.75V49H369.75C369.75 73.24 369.03 93.4 365.43 115.96L367.35 116.44C375.03 89.56 389.91 45.16 424.95 45.16C448.23 45.16 459.99 63.4 459.99 91.24V169ZM572.959 4.59999H599.359V169H572.959V145.24L572.239 144.76C557.119 160.84 540.799 172.84 518.479 172.84C491.599 172.84 474.319 149.8 474.319 109.24C474.319 68.68 491.599 45.16 518.479 45.16C540.799 45.16 557.119 56.2 572.239 73.72L572.959 73.24V4.59999ZM502.159 109.24C502.159 137.08 512.239 145.24 522.559 145.24C537.679 145.24 563.359 121.96 572.959 109.24C563.359 96.28 537.679 72.76 522.559 72.76C512.239 72.76 502.159 81.4 502.159 109.24ZM626.379 49H652.779V169H626.379V49ZM623.259 16.12C623.259 8.2 629.259 0.759992 639.819 0.759992C650.619 0.759992 656.619 8.2 656.619 16.12C656.619 24.52 650.619 31.72 639.819 31.72C629.259 31.72 623.259 24.52 623.259 16.12ZM670.969 113.56C670.969 76.6 700.969 45.16 737.929 45.16C764.329 45.16 777.769 62.44 777.769 83.8C777.769 110.44 751.369 136.36 709.609 141.4V143.08C714.409 145.72 722.809 147.88 728.329 147.88C741.529 147.88 755.689 142.84 768.649 134.2L779.209 157.24C766.249 165.16 749.929 172.84 730.729 172.84C693.529 172.84 670.969 148.36 670.969 113.56ZM696.169 121.24C726.409 114.52 750.889 97.24 750.889 84.28C750.889 77.08 745.849 70.6 736.249 70.6C710.329 70.6 694.969 97.96 696.169 121.24ZM812.323 127.96C813.043 137.08 820.483 146.92 844.003 146.92C866.323 146.92 874.483 140.44 874.483 133.24C874.483 125.56 869.683 120.28 842.803 118.84C799.843 116.44 785.923 103.24 785.923 82.12C785.923 58.84 813.283 44.92 845.443 44.92C866.323 44.92 887.923 51.16 902.083 61L888.643 84.28C877.843 77.32 860.803 70.84 845.443 70.84C822.403 70.84 813.763 75.16 813.763 82.12C813.763 89.32 817.363 94.6 845.683 95.8C893.443 97.96 902.083 114.52 902.083 133.24C902.083 153.88 882.403 172.84 844.003 172.84C803.443 172.84 785.443 154.84 785.443 127.96H812.323ZM941.119 4.59999V49H1019.36V75.4H941.119V117.4C941.119 133.96 949.759 146.44 968.959 146.44C980.479 146.44 998.719 140.44 1010.96 134.44L1022.24 158.44C1008.8 166.84 987.919 172.84 968.959 172.84C930.079 172.84 914.719 152.92 914.719 112.12V4.59999H941.119Z" fill="#F1D8BA"/>
+</svg>
+
+
+<svg id="word_2024" width="498" height="173" viewBox="0 0 498 173" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M119 142.6V169H11.24V143.32C67.64 105.4 90.68 75.88 91.16 54.28C91.64 37.96 80.6 27.16 64.04 27.16C42.92 27.16 32.6 43.96 26.12 72.52L0.2 66.76C5.72 32.2 27.32 0.759992 64.04 0.759992C96.92 0.759992 118.28 21.88 118.28 54.28C118.28 80.68 95 113.56 59.24 141.4L59.72 142.6H119ZM129.106 86.92C129.106 52.36 145.666 0.759992 187.666 0.759992C229.666 0.759992 246.226 52.36 246.226 86.92C246.226 121.48 229.666 172.84 187.666 172.84C145.666 172.84 129.106 121.48 129.106 86.92ZM155.506 86.92C155.506 111.64 164.386 146.44 187.666 146.44C210.946 146.44 219.826 111.64 219.826 86.92C219.826 62.2 210.946 27.16 187.666 27.16C164.386 27.16 155.506 62.2 155.506 86.92ZM367.447 142.6V169H259.687V143.32C316.087 105.4 339.127 75.88 339.607 54.28C340.087 37.96 329.047 27.16 312.487 27.16C291.367 27.16 281.047 43.96 274.567 72.52L248.647 66.76C254.167 32.2 275.767 0.759992 312.487 0.759992C345.367 0.759992 366.727 21.88 366.727 54.28C366.727 80.68 343.447 113.56 307.687 141.4L308.167 142.6H367.447ZM497.073 113.08V138.52H469.713V169H444.273V138.52H373.953V113.08L439.473 4.59999H469.713V113.08H497.073ZM402.513 113.08H444.273V47.32L442.833 47.08L402.513 113.08Z" fill="#F1D8BA"/>
+</svg>
+
+</body>
+
+<script type="text/javascript">
+
+  //helpers
+
+  const $ = str=>document.querySelectorAll(str) // str->array of el
+
+  const $$ = str=>f=>Array.from($(str)).map(f)
+
+  let id=s=>document.getElementById(s)
+
+  // cache
+
+  const $colorpicker = id('colorpicker')
+
+  const inputstyler=id('inputstyler')
+
+  let rrr=$colorpicker.getBoundingClientRect()
+
+  // layout function
+
+  let draw=e=> {
+
+    let padding=16+16
+
+    let height = window.innerHeight-padding
+
+    Array.from($('section')).map(el=>el.style.height=`${height}px`)
+
+  }
+
+  draw(null)
+
+  addEventListener('resize', draw);
+
+  // build-in eyeDropper, depricated
+
+  // let eyeDropper=null
+
+  // if (window.EyeDropper) {
+
+  //     eyeDropper = new EyeDropper()
+  // }
+
+  let basic_color = '#ffffff'
+  let selected_color = '#ffffff'
+  let bright=1
+
+  let set_brightness=color=>'#'+color
+    .slice(1)
+    .match(/.{1,2}/g)
+    .map(s=>parseInt(s,16))
+    .map(a=>Math.round(a*bright))
+    .map(n=>n.toString(16))
+    .map(s=>1==s.length?`0${s}`:s)
+    .join('')
+
+  let select_color =c=>{
+
+    selected_color=c
+
+    $$('body')(el=>el.style.background=c)
+
+    $$('#_form input')(el=>el.style.color=c)
+
+    id('color_selected').innerText=c.slice(1)
+    id('color_value').setAttribute('value',c)
+
+    id('send').style.color=c
+
+    inputstyler.innerText=`#_form input::placeholder{color:${c};}`
+
+    id('_form').style.display='block'
+
+    picker=id('picker')
+
+  }
+
+  let update_brightcontrol = (w)=>{
+
+    let r = ((1-bright)*w)-10
+
+    if (r<0)r=0
+    if (r>w-22)r=w-22
+
+    id('slider').style.right=`${r}px`
+
+    select_color(set_brightness(basic_color))
+  }
+
+  let picking=false
+
+  let picker=id('picker')
+
+  let color_shifts= [ // tone spectre encoded
+    [1,'+',0],
+    ['-',1,0],
+    [0,1,'+'],
+    [0,'-',1],
+    ['+',0,1],
+    [1,0,'-']
+  ]
+
+  const get_color=(event)=>{
+
+    let r=rrr
+
+    let x=event.x-r.x
+    let y=event.y-r.y
+
+    if(y<0)y=0
+    if(y>r.height)y=r.height
+
+    let range=parseInt('ff',16) //256
+
+    let stripe_width=r.width/color_shifts.length
+
+    let tone_shift = Math.floor(x/stripe_width)
+
+    let brightness = 1-y/r.height
+
+    let tone = color_shifts[tone_shift].map(i=>{
+
+      if ('string'==typeof i) {
+        let gradient=(x-tone_shift*stripe_width)/stripe_width
+
+        if('+'==i){ return range*gradient}
+        if('-'==i){ return range*(1-gradient)}
+      } else {
+        return i*range
+      }
+    })
+
+    let _fixed = tone.map(i=>i+brightness*(range-i))
+
+    let _color = _fixed.map(i=>Math.round(i).toString(16)).map(i=>{
+      if(i.length==1){
+        return '0'+i
+      } else return i
+    })
+    .join('')
+
+
+    basic_color=`#${_color}`
+
+    id('brightcontrol').setAttribute(
+      'style',
+      `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
+
+    // refactorme: setter in get function
+
+    select_color(set_brightness(basic_color))
+
+
+    return `#${_color}`
+
+  }
+
+  const stop_picker=()=>{
+    picking=false
+    $colorpicker.style.cursor='default'
+    id('picker').style.cursor='default'
+
+    basic_color=get_color(event)
+
+    id('inner_picker').setAttribute('fill',basic_color)
+
+    select_color(set_brightness(basic_color))
+  }
+
+  let pick = event=>{
+
+    // if (eyeDropper) {
+    //     eyeDropper.open().then(selectedColor => {
+    //         basic_color=selectedColor.sRGBHex
+    //         id('brightcontrol').setAttribute(
+    //             'style',
+    //             `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
+    //         select_color(set_brightness(basic_color))
+    //       }).catch(() => {
+    //           console.log('eye dropper cancelled')
+    //       })
+    //       return
+    // }
+
+    if (picking) {
+
+      stop_picker()
+
+      return
+
+    }
+
+    if (event.target.id=='colorpicker'
+      || event.target.id=='inner_picker') {
+
+      picking=true
+
+      $colorpicker.style.cursor='none'
+      picker.style.cursor='none'
+      picker.style.display='block'
+
+      picker.style.left=event.x-12
+      picker.style.top=event.y-12
+
+      let _c=get_color(event)
+
+      id('inner_picker').setAttribute('fill',_c)
+
+
+    }
+
+    if (event.target.id=='brightcontrol'
+     || event.target.id=='slider') {
+
+      let r = id('brightcontrol').getBoundingClientRect()
+
+      bright = (event.x-r.x)/r.width
+
+      update_brightcontrol(r.width)
+
+    }
+  } // end pick
+
+  addEventListener('click',pick)
+
+  let drag = false
+
+  let rr = id('brightcontrol').getBoundingClientRect()
+
+  let ondown=e=>{
+
+    console.log(e.target)
+
+    rr = id('brightcontrol').getBoundingClientRect()
+    rrr = $colorpicker.getBoundingClientRect() // update
+
+    if(e.target.id=='slider'){
+
+      drag=true
+      e.target.style.cursor='move'
+      id('brightcontrol').style.cursor='move'
+  }}
+
+  let onup=e=>{if(drag){
+    drag=false
+    id('brightcontrol').style.cursor='pointer'
+    id('slider').style.cursor='pointer'
+  }}
+
+  let fill_color = {
+    'first':'#EDA8F0',
+    'second':'#018678',
+    'third':'#F1D8BA',
+    'forth':'#F2F850'
+  }
+
+
+  let onmove=e=>{
+
+    let is_top=e.clientY<innerHeight/2
+    let is_left=e.clientX<innerWidth/2
+
+
+    let setbodyclass=c=>{
+
+        let current = Array.from(document.body.classList)[0]
+        if (current!==c) {
+            document.body.classList.remove(current)
+            document.body.classList.add(c)
+
+            $$('path')(el=>el.setAttribute('fill',fill_color[c]))
+        }
+    }
+
+    if (is_left) {
+        if (is_top) setbodyclass('first')
+        else setbodyclass('third')
+    } else {
+        if (is_top) setbodyclass('second')
+        else setbodyclass('forth')
+    }
+
+    id('dropper').style.left=`${e.clientX}px`
+    id('dropper').style.top=`${e.clientY}px`
+
+    if (picking){
+
+      let culer =get_color(e)
+
+      let y=e.y
+      if (y>rrr.height)y=rrr.height
+
+      picker.style.left=e.x-12
+      picker.style.top=y-12
+
+      id('inner_picker').setAttribute('fill',culer)
+    }
+
+    if (drag){
+
+      bright = (e.x-rr.x)/rr.width
+
+      if(bright>1)bright=1
+      if(bright<0)bright=0
+
+      update_brightcontrol(rr.width)
+    }
+
+  }
+
+
+  addEventListener('mousedown', ondown)
+  addEventListener('mouseup', onup)
+  addEventListener('mousemove', onmove)
+
+  addEventListener('resize',e=>{
+    if (picking) stop_picker()
+  })
+
+  const changeSection=name=>
+      $$('section')(el=>el.style.display=el.id==name?'block':'none')
+
+  $$('.cta')(el=>el.addEventListener('click', e=>{
+
+    changeSection('pick')
+    id('dropper').style.display='none'
+
+    }))
+
+  // changeSection('pick')
+
+</script>
+
+</html>

@@ -62,6 +62,14 @@ const to_hsb=c=>{
 }
 
 
+app.get('/',(req,res)=>{
+
+  res.render('first',{ 
+  })
+
+})
+
+
 app.post('/',(req,res)=>{
 
   let entry = Object.assign({
