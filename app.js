@@ -69,8 +69,14 @@ app.get('/',(req,res)=>{
 
 })
 
+app.get('/pick',(req,res)=>{
+    res.render('pick',{
+  })
+})
 
-app.post('/',(req,res)=>{
+
+
+app.post('/pick',(req,res)=>{
 
   let entry = Object.assign({
       ip: req.ip,

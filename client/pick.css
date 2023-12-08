@@ -1,0 +1,51 @@
+
+#_form {
+    margin: 8px;
+    display: none
+}
+
+#_form input {
+    width: 100%;
+    width: calc(100% - 10px);
+    margin: 0px 0px 12px 0px;
+
+    padding-left: 8px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    border: 0;
+
+    /* input */
+
+    align-items: center;
+
+    height: 24px;
+
+    background: #FFFFFF;
+    font-family: 'Bitum';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: -0.04em;
+    text-transform: lowercase;
+
+}
+
+#send {
+
+    cursor: pointer;
+
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    height: 24px;
+    border: 0;
+}
+
+
+#picker {
+    display: none;
+    position: absolute;
+    cursor: none;
+}
