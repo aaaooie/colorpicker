@@ -1,0 +1,173 @@
+
+body {
+    overflow: hidden;
+    margin:0;
+    padding:0;
+}
+section {
+    width: 100%;
+    min-height: 100%;
+    align-items: center;
+    justify-content: center;
+    position: static;
+
+}
+
+body>section {
+    position: static !important;
+}
+
+#pick {
+    max-width: 928px;
+
+}
+
+svg,img,h2,button {user-select: none;}
+svg {cursor: none;}
+
+#dropper {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.description {
+
+    /* Узнать, какой цвет года на самом деле люди считают самым модным, сравнить с тем какой получился у Pantone */
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    /* or 100% */
+    text-align: center;
+    letter-spacing: -0.04em;
+    text-transform: lowercase;
+
+    width:100%;
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.cta {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 16px;
+
+    position: absolute;
+    width: 456px;
+    height: 118px;
+
+    right: 24px;
+    bottom: 90px;
+
+}
+
+#word_trendiest {
+
+    position: absolute;
+    left: 10%;
+/*    margin-left: -320px;*/
+    top: 35px;
+}
+
+#word_color {
+    position: absolute;
+    left: 51.66%;
+    top: 221px;
+}
+
+#word_2024 {
+    position: absolute;
+    bottom: 48px;
+    left: 24px;
+}
+
+#hi {
+    text-align: center;
+}
+
+#slide {
+    margin: auto;
+}
+
+button#start {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 11px 24px 13px;
+    gap: 10px;
+
+    width: 456px;
+    height: 48px;
+
+/*    background: #EDA8F0;*/
+    border-radius: 1000px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+
+    cursor: none;
+    border-width: 0px;
+
+}
+
+/*COLORS*/
+
+body.first {
+    background: #D62270;
+}
+body.first .cta {
+    color: #EDA8F0;;
+}
+body.first button {
+    background: #EDA8F0;
+    color: #D62270;
+}
+
+body.second {
+    background: #C2EC3F;
+}
+body.second .cta {
+    color: #018678;
+}
+body.second button {
+    background: #018678;
+    color: #C2EC3F;
+}
+
+
+body.third{
+    background: #0F4767;
+}
+body.third .cta{
+    color: #F1D8BA;
+}
+body.third button {
+    background: #F1D8BA;
+    color: #0F4767;
+}
+body.forth {
+    background: #8D752C;
+
+}
+body.forth .cta {
+    color: #F2F850;
+}
+
+body.forth button {
+    background: #F2F850;
+    color: #8D752C;
+}
