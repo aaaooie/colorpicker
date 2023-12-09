@@ -40,36 +40,13 @@ const upsert=arr=>el=>{
   }
 }
 
-const RGBToHSB = (r, g, b) => {
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  const v = Math.max(r, g, b),
-    n = v - Math.min(r, g, b);
-  const h =
-    n === 0 ? 0 : n && v === r ? (g - b) / n : v === g ? 2 + (b - r) / n : 4 + (r - g) / n;
-  return [60 * (h < 0 ? h + 6 : h), v && (n / v) * 100, v * 100];
 
-}
-
-const to_hsb=c=>{
-
-  let [r,g,b]=c.color_value.slice(1)
-    .match(/.{1,2}/g)
-    .map(s=>parseInt(s,16))
-
-    return RGBToHSB(r,g,b)
-}
+let _show=s=>(req,res)=>res.render(s)
 
 
-app.get('/',(req,res)=>res.render('first'))
-
-app.get('/pick',(req,res)=>{
-    res.render('pick',{
-  })
-})
-
-
+app.get('/',_show('first'))
+app.get('/pick',_show('pick'))
+app.get('/about',_show('about'))
 
 app.post('/pick',(req,res)=>{
 
@@ -82,18 +59,8 @@ app.post('/pick',(req,res)=>{
 
   data = upsert(data)(entry)
 
-  let sorted=[...data].sort((a,b)=>{
-
-    let [ha,sa,ba] = to_hsb(a)
-    let [hb,sb,bb] = to_hsb(b)
-
-    return (ha-hb)//+(sa-sb)+(ba-bb)
-
-  })
-
-  res.render('demo',{ // 'result'
+  res.render('demo',{
     pick:req.body.color_value,
-    all_picks: sorted,//data,
     data_json: JSON.stringify(data),//data,
     picks_count: data.length
   })

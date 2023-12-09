@@ -7,6 +7,27 @@ body {
 
 svg,img,h2,button {user-select: none;}
 
+
+.about {
+    position: absolute;
+    top: 56px;
+    right: 24px;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 100% */
+    letter-spacing: -0.96px;
+    text-transform: lowercase;
+}
+
+#about_link {
+    text-decoration: none;
+    cursor: none;
+}
+#about_link:hover {
+    text-decoration: underline;
+}
+
 #dropper {
     position: absolute;
     width: 40px;
@@ -111,7 +132,7 @@ button#start {
 body.first {
     background: #D62270;
 }
-body.first .cta {
+body.first .cta, body.first, #about_link {
     color: #EDA8F0;;
 }
 body.first button {
@@ -122,7 +143,7 @@ body.first button {
 body.second {
     background: #C2EC3F;
 }
-body.second .cta {
+body.second .cta, body.second #about_link {
     color: #018678;
 }
 body.second button {
@@ -134,7 +155,7 @@ body.second button {
 body.third{
     background: #0F4767;
 }
-body.third .cta{
+body.third .cta, body.third #about_link{
     color: #F1D8BA;
 }
 body.third button {
@@ -145,7 +166,7 @@ body.forth {
     background: #8D752C;
 
 }
-body.forth .cta {
+body.forth .cta, body.forth #about_link {
     color: #F2F850;
 }
 

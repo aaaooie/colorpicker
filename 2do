@@ -1,16 +1,15 @@
 [,,,] current
 
-- страница: о нас
-- colorpicker: mobile ux
-- подсветка своего варианта
 - переверстать страницу response
 - кнопка "переголосовать"
+- colorpicker: mobile ux
 
 [,,,] первый экран
 
 - сделать пропорциональные картинки
 - размер курсора
 
+x страница: о нас
 x кнопка
 x смена цветов: четыре зоны
 x new first page
@@ -21,6 +20,7 @@ x img -> svg
 
 [,,,] результаты
 
+- подсветка своего варианта
 - all colors sorted: 2-d sort line by line (hue+brightness)
 
 [,,,] ux

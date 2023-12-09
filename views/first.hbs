@@ -15,6 +15,10 @@
 
 <body class="third">
 
+    <div class="about">
+        <a id=about_link href="/about">О нас</a>
+    </div>
+
 <div class="cta">
 
     <h2 class="description">Узнать, какой цвет года на&nbsp;самом деле люди считают самым модным, сравнить с&nbsp;тем&nbsp;какой получился у&nbsp;Pantone</h2>
@@ -73,23 +77,26 @@
     'forth':'#F2F850'
   }
 
+  let cursor_height=40
+
+
+  let setbodyclass=c=>{
+
+    let current = Array.from(document.body.classList)[0]
+
+    if (current!==c) {
+        document.body.classList.remove(current)
+        document.body.classList.add(c)
+
+        $$('path')(el=>el.setAttribute('fill',fill_color[c]))
+    }
+  }
+
   // draw function
   let onmove=e=>{
 
     let is_top=e.clientY<innerHeight/2
     let is_left=e.clientX<innerWidth/2
-
-
-    let setbodyclass=c=>{
-
-        let current = Array.from(document.body.classList)[0]
-        if (current!==c) {
-            document.body.classList.remove(current)
-            document.body.classList.add(c)
-
-            $$('path')(el=>el.setAttribute('fill',fill_color[c]))
-        }
-    }
 
     if (is_left) {
         if (is_top) setbodyclass('first')
@@ -100,7 +107,7 @@
     }
 
     dropper.style.left=`${e.clientX}px`
-    dropper.style.top=`${e.clientY}px`
+    dropper.style.top=`${e.clientY-cursor_height}px`
 
     if (!cursor_started) {
         cursor_started=true;dropper.style.display='flex'
@@ -115,7 +122,7 @@
 
   let _go=s=>e=>document.location.href=s
 
-  $$('.cta')(el=>el.addEventListener('click', _go('/pick')))
+  $$('#start')(el=>el.addEventListener('click', _go('/pick')))
 
 
 </script>
