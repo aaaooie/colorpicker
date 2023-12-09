@@ -62,12 +62,7 @@ const to_hsb=c=>{
 }
 
 
-app.get('/',(req,res)=>{
-
-  res.render('first',{ 
-  })
-
-})
+app.get('/',(req,res)=>res.render('first'))
 
 app.get('/pick',(req,res)=>{
     res.render('pick',{

@@ -12,26 +12,18 @@
 
     <style type="text/css" id=inputstyler></style>
 </head>
+
 <body class="third">
 
+<div class="cta">
 
-    <section id=hi style='cursor:none;'>
+    <h2 class="description">Узнать, какой цвет года на&nbsp;самом деле люди считают самым модным, сравнить с&nbsp;тем&nbsp;какой получился у&nbsp;Pantone</h2>
 
-        <div class="cta">
+    <button id=start>
+        выбрать
+    </button>
 
-            <h2 class="description">Узнать, какой цвет года на&nbsp;самом деле люди считают самым модным, сравнить с&nbsp;тем&nbsp;какой получился у&nbsp;Pantone</h2>
-
-
-            <button id=start>
-                выбрать
-            </button>
-
-        </div>
-
-
-    </section>
-
-
+</div>
 
 <svg id="word_color" width="567" height="171" viewBox="0 0 567 171" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M96.36 93.96C95.16 75.96 81 68.04 63.96 68.04C46.92 68.04 27.48 84.6 27.48 105C27.48 125.4 46.92 141.96 63.96 141.96C79.08 141.96 89.64 130.68 96.84 118.2L121.08 131.4C109.56 154.44 90.6 167.4 63.96 168.84C27.48 170.76 0.6 134.04 0.6 105C0.6 75.96 27.48 41.16 63.96 41.16C94.68 41.16 125.4 61.56 125.4 93.96H96.36ZM127.753 105C127.753 75.96 157.033 40.92 193.513 41.16C229.993 41.4 259.273 75.96 259.273 105C259.273 134.04 229.993 168.84 193.513 168.84C157.033 168.84 127.753 134.04 127.753 105ZM154.633 105C154.633 125.4 176.473 141.96 193.513 141.96C210.553 141.96 232.393 125.4 232.393 105C232.393 84.6 210.553 68.28 193.513 68.04C176.473 67.8 154.633 84.6 154.633 105ZM272.503 0.599985H298.903V165H272.503V0.599985ZM312.216 105C312.216 75.96 341.496 40.92 377.976 41.16C414.456 41.4 443.736 75.96 443.736 105C443.736 134.04 414.456 168.84 377.976 168.84C341.496 168.84 312.216 134.04 312.216 105ZM339.096 105C339.096 125.4 360.936 141.96 377.976 141.96C395.016 141.96 416.856 125.4 416.856 105C416.856 84.6 395.016 68.28 377.976 68.04C360.936 67.8 339.096 84.6 339.096 105ZM535.686 107.16C538.326 99 539.766 91.32 539.766 83.88C539.766 74.04 537.366 69.24 531.126 69.24C524.406 69.24 516.966 76.2 507.366 97.32C497.526 118.92 490.806 135.24 480.966 165H456.966V45H480.966C480.966 72.12 480.726 86.76 477.366 110.04L479.286 110.52C487.686 83.4 499.686 41.16 534.966 41.16C554.406 41.16 566.166 54.36 566.166 81C566.166 89.88 564.486 101.4 561.126 111.96L535.686 107.16Z" fill="#F1D8BA"/>
@@ -64,8 +56,16 @@
   const $$ = str=>f=>Array.from($(str)).map(f)
 
   let id=s=>document.getElementById(s)
-  
 
+
+  // cache
+  let dropper = id('dropper')
+
+  // init
+  let cursor_started=false
+  dropper.style.display='none'
+
+  // color settings
   let fill_color = {
     'first':'#EDA8F0',
     'second':'#018678',
@@ -73,7 +73,7 @@
     'forth':'#F2F850'
   }
 
-
+  // draw function
   let onmove=e=>{
 
     let is_top=e.clientY<innerHeight/2
@@ -99,19 +99,23 @@
         else setbodyclass('forth')
     }
 
-    id('dropper').style.left=`${e.clientX}px`
-    id('dropper').style.top=`${e.clientY}px`
+    dropper.style.left=`${e.clientX}px`
+    dropper.style.top=`${e.clientY}px`
+
+    if (!cursor_started) {
+        cursor_started=true;dropper.style.display='flex'
+    }
 
   }
 
 
   addEventListener('mousemove', onmove)
 
-  $$('.cta')(el=>el.addEventListener('click', e=>{
+  // links
 
-    document.location.href="/pick"
+  let _go=s=>e=>document.location.href=s
 
-    }))
+  $$('.cta')(el=>el.addEventListener('click', _go('/pick')))
 
 
 </script>

@@ -37,16 +37,21 @@
             <form method=post action="" >
                 <h3 id=color_selected></h3>
 
-                <input
+                <input required
+                    autocomplete="off"
                     type="text" name="user_name"
                     placeholder="твоё имя"
+                    oninvalid="this.setCustomValidity('?')"
+                    oninput="this.setCustomValidity('')"/
                 />
                 <input
+                    autocomplete="off"
                     type="text" name="user_link"
                     placeholder="ссылка на тебя"
                 />
 
                 <input
+                    autocomplete="off"
                     type="text" name="color_name"
                     placeholder="название цвета"
                 />
@@ -107,16 +112,7 @@
 
   draw(null)
 
-  addEventListener('resize', draw);
-
-  // build-in eyeDropper, depricated
-
-  // let eyeDropper=null
-
-  // if (window.EyeDropper) {
-
-  //     eyeDropper = new EyeDropper()
-  // }
+  addEventListener('resize', draw)
 
   let basic_color = '#ffffff'
   let selected_color = '#ffffff'
