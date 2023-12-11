@@ -170,6 +170,9 @@ body.forth .cta, body.forth #about_link {
     color: #F2F850;
 }
 
+body.forth button:hover {
+    background: #F6FA87;
+}
 body.forth button {
     background: #F2F850;
     color: #8D752C;
