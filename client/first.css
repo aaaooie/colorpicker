@@ -21,7 +21,7 @@ button{transition: all 200ms ease-in;}
 .about {
     position: absolute;
     top: 56px;
-    right: 24px;
+    right: 40px;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -58,7 +58,8 @@ button{transition: all 200ms ease-in;}
     font-size: 18px;
     line-height: 18px;
     /* or 100% */
-    text-align: center;
+    
+    text-align: left;
     letter-spacing: -0.04em;
     text-transform: lowercase;
 
@@ -82,7 +83,7 @@ button{transition: all 200ms ease-in;}
     width: 456px;
     height: 118px;
 
-    right: 24px;
+    right: 40px;
     bottom: 90px;
 
 }
@@ -104,7 +105,7 @@ button{transition: all 200ms ease-in;}
 #word_2024 {
     position: absolute;
     bottom: 48px;
-    left: 24px;
+    left: 40px;
 }
 
 #hi {
@@ -115,13 +116,16 @@ button{transition: all 200ms ease-in;}
     margin: auto;
 }
 
+
 button#start {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 11px 24px 13px;
+    padding: 11px 40px 13px;
     gap: 10px;
+
+    font-size: 18px;
 
     width: 456px;
     height: 48px;
