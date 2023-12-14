@@ -102,7 +102,7 @@
 
   let draw=e=> {
 
-    let padding=16+16
+    let padding=0
 
     let height = window.innerHeight-padding
 
@@ -183,11 +183,15 @@
     if(y<0)y=0
     if(y>r.height)y=r.height
 
+    if (x>r.width)x=r.width
+
     let range=parseInt('ff',16) //256
 
     let stripe_width=r.width/color_shifts.length
 
     let tone_shift = Math.floor(x/stripe_width)
+
+    if (tone_shift>color_shifts.length-1)tone_shift=color_shifts.length-1
 
     let brightness = 1-y/r.height
 
@@ -230,8 +234,8 @@
 
   const stop_picker=()=>{
     picking=false
-    $colorpicker.style.cursor='default'
-    id('picker').style.cursor='default'
+    $colorpicker.style.cursor='pointer'
+    id('picker').style.cursor='pointer'
 
     basic_color=get_color(event)
 
@@ -240,31 +244,7 @@
     select_color(set_brightness(basic_color))
   }
 
-  let pick = event=>{
-
-    // if (eyeDropper) {
-    //     eyeDropper.open().then(selectedColor => {
-    //         basic_color=selectedColor.sRGBHex
-    //         id('brightcontrol').setAttribute(
-    //             'style',
-    //             `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
-    //         select_color(set_brightness(basic_color))
-    //       }).catch(() => {
-    //           console.log('eye dropper cancelled')
-    //       })
-    //       return
-    // }
-
-    if (picking) {
-
-      stop_picker()
-
-      return
-
-    }
-
-    if (event.target.id=='colorpicker'
-      || event.target.id=='inner_picker') {
+  let start_picking = event=>{
 
       picking=true
 
@@ -279,22 +259,9 @@
 
       id('inner_picker').setAttribute('fill',_c)
 
-
-    }
-
-    if (event.target.id=='brightcontrol'
-     || event.target.id=='slider') {
-
-      let r = id('brightcontrol').getBoundingClientRect()
-
-      bright = (event.x-r.x)/r.width
-
-      update_brightcontrol(r.width)
-
-    }
   } // end pick
 
-  addEventListener('click',pick)
+  // addEventListener('click',pick)
 
   let drag = false
 
@@ -302,21 +269,50 @@
 
   let ondown=e=>{
 
+
     rr = id('brightcontrol').getBoundingClientRect()
     rrr = $colorpicker.getBoundingClientRect() // update
 
-    if(e.target.id=='slider'){
+    if(e.target.id=='brightcontrol'){
+      document.body.classList.add('unselectable')
 
       drag=true
-      e.target.style.cursor='move'
-      id('brightcontrol').style.cursor='move'
-  }}
 
-  let onup=e=>{if(drag){
-    drag=false
-    id('brightcontrol').style.cursor='pointer'
-    id('slider').style.cursor='pointer'
-  }}
+      bright = (e.x-rr.x)/rr.width
+
+      if(bright>1)bright=1
+      if(bright<0)bright=0
+
+      update_brightcontrol(rr.width)
+
+    }
+    if(e.target.id=='slider'){
+      document.body.classList.add('unselectable')
+
+      drag=true
+    }
+    if(e.target.id=='colorpicker'){
+      document.body.classList.add('unselectable')
+
+      picking=true
+      start_picking(e)
+    }
+
+  }
+
+  let onup=e=>{
+    document.body.classList.remove('unselectable')
+
+    if(drag){
+      drag=false
+      bright = (e.x-rr.x)/rr.width
+
+      if(bright>1)bright=1
+      if(bright<0)bright=0
+
+      update_brightcontrol(rr.width)
+
+  }if(picking){stop_picker()}}
 
   let onmove=e=>{
 
@@ -326,9 +322,11 @@
       let culer =get_color(e)
 
       let y=e.y
+      let x=e.x
       if (y>rrr.height)y=rrr.height
+      if (x>rrr.width)x=rrr.width
 
-      picker.style.left=e.x-12
+      picker.style.left=x-12
       picker.style.top=y-12
 
       id('inner_picker').setAttribute('fill',culer)
@@ -354,6 +352,21 @@
   addEventListener('resize',e=>{
     if (picking) stop_picker()
   })
+
+
+  // DEPRICATED
+  // if (eyeDropper) {
+  //     eyeDropper.open().then(selectedColor => {
+  //         basic_color=selectedColor.sRGBHex
+  //         id('brightcontrol').setAttribute(
+  //             'style',
+  //             `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
+  //         select_color(set_brightness(basic_color))
+  //       }).catch(() => {
+  //           console.log('eye dropper cancelled')
+  //       })
+  //       return
+  // }
 
 
 </script>
