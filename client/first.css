@@ -3,9 +3,19 @@ body {
     overflow: hidden;
     margin:0;
     padding:0;
+    transition: background-color 200ms ease-in;
+
 }
 
 svg,img,h2,button {user-select: none;}
+
+path {
+    transition: fill 200ms ease-in;
+
+}
+
+a,h2 {transition: color 200ms ease-in;}
+button{transition: all 200ms ease-in;}
 
 
 .about {
@@ -34,6 +44,9 @@ svg,img,h2,button {user-select: none;}
     height: 40px;
     z-index: 100;
     pointer-events: none;
+
+    filter: drop-shadow( 6px 3px 2px rgba(0, 0, 0, .5));
+/*     rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;*/
 }
 
 .description {
@@ -153,17 +166,17 @@ body.second button {
 
 
 body.third{
-    background: #0F4767;
+    background-color: #0F4767;
 }
 body.third .cta, body.third #about_link{
     color: #F1D8BA;
 }
 body.third button {
-    background: #F1D8BA;
+    background-color: #F1D8BA;
     color: #0F4767;
 }
 body.forth {
-    background: #8D752C;
+    background-color: #8D752C;
 
 }
 body.forth .cta, body.forth #about_link {
@@ -171,9 +184,9 @@ body.forth .cta, body.forth #about_link {
 }
 
 body.forth button:hover {
-    background: #F6FA87;
+    background-color: #F6FA87;
 }
 body.forth button {
-    background: #F2F850;
+    background-color: #F2F850;
     color: #8D752C;
 }
