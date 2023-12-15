@@ -104,6 +104,7 @@
   const inputstyler=id('inputstyler')
 
   let rrr=$colorpicker.getBoundingClientRect()
+  let rr = id('brightcontrol').getBoundingClientRect()
 
   // layout function
 
@@ -171,11 +172,34 @@
 
   let picker=id('picker')
 
+  // some reverse calculations 
+
+  let get_brightness=c=>c
+    .slice(1)
+    .match(/.{1,2}/g)
+    .map(s=>parseInt(s,16))
+    .reduce((a,b)=>a>b?a:b)/255
+
+  let unset_brightness=(c,b)=>'#'+c
+    .slice(1)
+    .match(/.{1,2}/g)
+    .map(s=>parseInt(s,16))
+    .map(i=>Math.round(i/(b)))
+    .map(j=>j.toString(16))
+    .join('')
 
   // console.log(_previous)
   if (_previous!==''){
 
-    select_color(_previous)
+    bright=get_brightness(_previous)
+
+    basic_color=unset_brightness(_previous, bright)
+
+    id('brightcontrol').setAttribute(
+      'style',
+      `background:linear-gradient(90deg, #000000 0%, ${basic_color} 100%);`)
+
+    update_brightcontrol(rr.width)
   }
 
 
@@ -279,8 +303,6 @@
   // addEventListener('click',pick)
 
   let drag = false
-
-  let rr = id('brightcontrol').getBoundingClientRect()
 
   let ondown=e=>{
 

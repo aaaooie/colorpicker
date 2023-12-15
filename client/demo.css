@@ -29,10 +29,19 @@ section {
 	top: 8px;
 }
 
-button#see_results {
+.align_bottom {
+
+	position: absolute;
+	display: flex;
+	bottom: 0px;
+	width: 75%;
+
+}
+
+button {
 	margin:8px;
 
-	width: calc(100% - 16px);
+	width: calc(75% - 32px);
 	background: white;
 	border-radius: 12px;
 	height: 24px;
@@ -40,9 +49,15 @@ button#see_results {
 
 	cursor:pointer;
 
-	position: absolute;
-	bottom:0px;
+/*	position: flex;*/
+/*	bottom:0px;*/
 }
+
+button#change {
+	width: calc(25% - 32px);
+
+}
+
 
 #lookup {
 

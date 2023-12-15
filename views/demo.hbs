@@ -25,8 +25,10 @@
 			<h3 id="picked" class="align_center">{{slice pick}}</h3>
 			<h3 id="color_name" class="align_center">{{color_name}}</h3>
 
-			<button id=change>изменить</button>
-			<button id=see_results>ответы других участников</button>
+			<div class="align_bottom">
+				<button id=change>изменить</button>
+				<button id=see_results>ответы других участников</button>
+			</div>
 		</div>
 	</section>
 
@@ -173,8 +175,8 @@
 
 		if (lookup_shown) {
 
-			console.log(lookup_x-e.clientX)
-			console.log(lookup_y-e.clientY)
+			// console.log(lookup_x-e.clientX)
+			// console.log(lookup_y-e.clientY)
 
 			if((Math.abs(lookup_x-e.clientX)<5)
 			 &&(Math.abs(lookup_y-e.clientY)<5)){
