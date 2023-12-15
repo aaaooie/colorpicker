@@ -83,7 +83,7 @@ let check_session=(req, res, next)=>{
 }
 
 let init_session = (req, res, next)=>{
-
+  
     // req.session = {}
     req.session.started=new Date;
     req.session.id=crypto.randomUUID()
@@ -92,7 +92,7 @@ let init_session = (req, res, next)=>{
 }
 
 
-app.get('/',init_session,_show('first'))
+app.get('/',check_session,_show('first'))
 app.get('/about',_show('about'))
 app.get('/pick',check_session,(req, res)=>{
 
