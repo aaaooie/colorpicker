@@ -83,7 +83,7 @@ let check_session=(req, res, next)=>{
 }
 
 let init_session = (req, res, next)=>{
-  
+
     // req.session = {}
     req.session.started=new Date;
     req.session.id=crypto.randomUUID()
@@ -109,6 +109,12 @@ app.get('/pick',check_session,(req, res)=>{
 app.post('/pick',check_session,(req,res)=>{
 
   // console.log(req.session)
+
+  if (undefined===req.body.color_value) {
+    res.sendStatus(400)
+    res.end()
+    return
+  }
 
   let entry = Object.assign({
       id: req.session.id,
