@@ -23,7 +23,9 @@
 			<br/>
 
 			<h3 id="picked" class="align_center">{{slice pick}}</h3>
+			<h3 id="color_name" class="align_center">{{color_name}}</h3>
 
+			<button id=change>изменить</button>
 			<button id=see_results>ответы других участников</button>
 		</div>
 	</section>
@@ -300,6 +302,8 @@
 			changeSection('results')
 			draw_rectangles()
 		}
+
+		if(e.target.id=='change'){document.location.href='/pick'}
 	})
 
 	layout=e=>{

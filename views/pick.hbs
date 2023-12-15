@@ -41,23 +41,27 @@
                     autocomplete="off"
                     type="text" name="user_name"
                     placeholder="твоё имя"
+                    value="{{user_name}}"
                     oninvalid="this.setCustomValidity('?')"
                     oninput="this.setCustomValidity('')"/
                 />
                 <input
                     autocomplete="off"
+                    value="{{user_link}}"
                     type="text" name="user_link"
                     placeholder="ссылка на тебя"
                 />
 
                 <input
                     autocomplete="off"
+                    value="{{color_name}}"
                     type="text" name="color_name"
                     placeholder="название цвета"
                 />
 
                 <input
                     id=color_value
+                    value="{{color_value}}"
                     type="hidden" name=color_value
                 />
 
@@ -81,6 +85,9 @@
 </body>
 
 <script type="text/javascript">
+
+  // data passage from the server
+  let _previous='{{{color_value}}}'
 
   //helpers
 
@@ -163,6 +170,14 @@
   let picking=false
 
   let picker=id('picker')
+
+
+  // console.log(_previous)
+  if (_previous!==''){
+
+    select_color(_previous)
+  }
+
 
   let color_shifts= [ // tone spectre encoded
     [1,'+',0],
