@@ -55,6 +55,7 @@
 		<div id="lookup" style="display:none;">
 
 			<div id=color_view class="color"></div>
+			<div id=lookup_color_name class="text"></div>
 			<div id=color_value class="text"></div>
 			<div id=user_name class="text"></div>
 			<div id=user_link class="text"></div>
@@ -171,7 +172,7 @@
 
 		const lookup=id('lookup')
 
-		// console.log('sdfsdf')
+		// console.log(data)
 
 		if (lookup_shown) {
 
@@ -206,7 +207,8 @@
 		lookup.style.left=`${x}px`
 
 		id('color_view').style.background=data.color_value
-		id('color_value').innerHTML=data.color_value.slice(1)
+		id('color_value').innerHTML=data.color_value//.slice(1)
+		id('lookup_color_name').innerHTML=data.color_name
 		id('user_name').innerHTML=data.user_name
 		id('user_link').innerHTML=data.user_link
 
