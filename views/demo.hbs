@@ -46,13 +46,16 @@
 
 	<section id=results style="display: none;">
 
-		<div class="header">
-			<h3>Самый модный цвет 2024 года</h3>
-			{{!-- <h3>Ответы</h3> --}}
-		</div>
+
+		<div class="about">
+	        <a id=about_link href="/about">О нас</a>
+	    </div>
+
 
 		<div class="footer" >
-            <a href="https://eshgruppa.com/"><img class="logo" src=logo.svg></a>
+            {{!-- <a href="https://eshgruppa.com/"><img class="logo" src=logo.svg></a> --}}
+
+            <button id="revote">выбрать другой цвет</button>
 
 		</div>
 
@@ -66,11 +69,11 @@
 
 		<div id="lookup" style="display:none;">
 
-			<div id=color_view class="color"></div>
-			<div id=lookup_color_name class="text"></div>
-			<div id=color_value class="text"></div>
-			<div id=user_name class="text"></div>
-			<div id=user_link class="text"></div>
+			{{!-- <div id=color_view class="color"></div> --}}
+			<div id=lookup_color_name class="text"><span></span></div>
+			<div id=color_value class="text"><span></span></div>
+			<div id=user_name class="text"><span></span></div>
+			{{!-- <div id=user_link class="text"></div> --}}
 		</div>
 
 	</section>
@@ -150,7 +153,7 @@
 	    let [ha,sa,ba] = to_hsb(a)
 	    let [hb,sb,bb] = to_hsb(b)
 
-	    return (ba-bb)//+(sa-sb)+(ba-bb)
+	    return (bb-ba)//+(sa-sb)+(ba-bb)
 
 	})
 
@@ -179,6 +182,12 @@
 
 	let lookup_shown=false,lookup_x,lookup_y
 
+	let tolerance=15
+
+
+	let lookup_width =356
+	let lookup_height=292
+
 
 	const show_lookup=(e,data)=>{
 
@@ -191,8 +200,10 @@
 			// console.log(lookup_x-e.clientX)
 			// console.log(lookup_y-e.clientY)
 
-			if((Math.abs(lookup_x-e.clientX)<5)
-			 &&(Math.abs(lookup_y-e.clientY)<5)){
+
+
+			if((Math.abs(lookup_x-e.clientX)<tolerance)
+			 &&(Math.abs(lookup_y-e.clientY)<tolerance)){
 
 				lookup.style.display='none'
 				lookup_shown=false
@@ -206,9 +217,9 @@
 
 		let x = event.clientX + 5
 
-		if((x+112)>innerWidth)x=innerWidth-112
+		if((x+lookup_width)>innerWidth)x=innerWidth-lookup_width
 
-		let y = event.clientY-172-15
+		let y = event.clientY-lookup_height-15
 
 		if(y<0)y=0
 
@@ -218,11 +229,14 @@
 		lookup.style.top=`${y}px`
 		lookup.style.left=`${x}px`
 
-		id('color_view').style.background=data.color_value
-		id('color_value').innerHTML=data.color_value//.slice(1)
-		id('lookup_color_name').innerHTML=data.color_name
-		id('user_name').innerHTML=data.user_name
-		id('user_link').innerHTML=data.user_link
+		id('lookup').style.background=data.color_value
+		id('color_value').firstChild.innerHTML=data.color_value//.slice(1)
+		id('lookup_color_name').firstChild.innerHTML=data.color_name
+		id('user_name').firstChild.innerHTML=`by ${data.user_name}`
+
+		id('user_name').firstChild.setAttribute('title',`${data.user_link}`)
+
+		// id('user_link').innerHTML=data.user_link
 
 		// $$('.footer')(el=>el.style.background=data.color_value)
 
@@ -243,12 +257,58 @@
 
 		id('results').style.height=innerHeight
 
-		let padding=0//48
+		let padding=64
 
-  		let draw = SVG().addTo('#_map').size(innerWidth, innerHeight-padding)
+  		let draw = SVG().addTo('#_map').size(innerWidth, innerHeight)
 
 		let _h=(innerHeight-padding)/rows
 	  	let _w
+
+	  	// top black
+	  	let brick = draw.rect(
+        	innerWidth,
+	        32
+      	).attr({
+	    	x: 0,
+	    	y: 0
+	  	})
+
+	  	if (instant) {
+	        brick.attr({fill:`#000000`})
+	    } else {
+			brick.attr({fill: pick})
+		         .animate({
+	     		       duration: 600,
+		    	        delay: 0,
+		        	    when: 'now',
+			            wait: 100
+	  		        })
+	          		.attr({fill:`#000000`})
+	    }
+
+
+	  	// top black
+	  	let _brick = draw.rect(
+        	innerWidth,
+	        32
+      	).attr({
+	    	x: 0,
+	    	y: innerHeight-32
+	  	})
+
+	  	if (instant) {
+	        _brick.attr({fill:`#FFFFFF`})
+	    } else {
+			_brick.attr({fill: pick})
+		         .animate({
+	     		       duration: 600,
+		    	        delay: 0,
+		        	    when: 'now',
+			            wait: 100
+	  		        })
+	          		.attr({fill:`#FFFFFF`})
+	    }
+
 
 	  	for (let i=0;i<rows;i++){
 
@@ -261,7 +321,7 @@
 	              _h+0.5
 	          	).attr({
 	            	x: _w*j,
-	            	y: _h*i
+	            	y: 32+_h*i
 	          	})
 
 	          	if (instant) {
@@ -320,18 +380,19 @@
 		}
 
 		if(e.target.id=='change'){document.location.href='/pick'}
+		if(e.target.id=='revote'){document.location.href='/pick'}
 	})
 
 	layout=e=>{
 
 		id('slide').style.height=`${innerHeight}px`
 
-		let quantity = Math.ceil(Math.sqrt(picks_count))
+		// let quantity = Math.ceil(Math.sqrt(picks_count))
 
-		let w=innerWidth/quantity
-		let h=2+innerHeight/quantity
+		// let w=innerWidth/quantity
+		// let h=2+innerHeight/quantity
 
-		// $$('body')(el=>el.innerHTML+=`<style>.sq {width:${w}px !important; height:${h}px !important;}</style>`)
+		// // $$('body')(el=>el.innerHTML+=`<style>.sq {width:${w}px !important; height:${h}px !important;}</style>`)
 
 
 
