@@ -6,6 +6,34 @@ body {
 
 section {
 	width: 100%;
+	color: black;
+}
+
+h3 {
+	text-align: center;
+}
+
+h3 span {
+	background-color: white;
+	font-size: 48px;
+
+}
+
+.about {
+    position: absolute;
+    top: 40px;
+    right: 42px;
+    font-size: 24px;
+    font-style: normal;
+/*    color: #F2F850;*/
+    color: white;
+    font-weight: 400;
+    line-height: 24px; /* 100% */
+    letter-spacing: -0.96px;
+    text-transform: lowercase;
+}
+
+a#about_link {
 	color: white;
 }
 
@@ -26,14 +54,16 @@ section {
 
 .align_top {
 	position: absolute;
-	top: 8px;
+	top: 44px;
+	max-width: 75%;
+
 }
 
 .align_bottom {
 
 	position: absolute;
 	display: flex;
-	bottom: 0px;
+	bottom: 30px;
 	width: 75%;
 
 }
@@ -49,20 +79,24 @@ section {
 button {
 	margin:8px;
 
-	width: calc(75% - 32px);
+	width: calc(50% - 32px);
 	background: white;
-	border-radius: 12px;
-	height: 24px;
+	border-radius: 100px;
+/*	height: 24px;*/
 	border: 0;
 
 	cursor:pointer;
+
+	font-size: 18px;
+
+	padding: 14px 24px 15px;
 
 /*	position: flex;*/
 /*	bottom:0px;*/
 }
 
 button#change {
-	width: calc(25% - 32px);
+	width: calc(50% - 32px);
 
 }
 

@@ -16,14 +16,26 @@
 </head>
 <body>
 
-	<section id=response style="display: block; background: {{pick}};">
+
+
+
+	<section id=s style="display: block; background: {{pick}};">
+
+	   <div class="about">
+	        <a id=about_link href="/about">О нас</a>
+	    </div>
 
 		<div id=slide>
-			<h3 class="align_top">Мы получили твой вариант самого модного цвета 2024 года</h3>
+			<div class="align_top">
+			<h3><span>Мы получили твой вариант</span></h3>
+			{{!-- <br/> --}}
+
+			<h3><span>самого модного цвета 2024 года</span></h3>
+			</div>
 			<br/>
 
-			<h3 id="picked" class="align_center">{{slice pick}}</h3>
-			<h3 id="color_name" class="align_center">{{color_name}}</h3>
+			<h3 id="picked" class="align_center"><span>{{slice pick}}</span></h3>
+			<h3 id="color_name" class="align_center"><span>{{color_name}}</span></h3>
 
 			<div class="align_bottom">
 				<button id=change>изменить</button>
@@ -36,7 +48,7 @@
 
 		<div class="header">
 			<h3>Самый модный цвет 2024 года</h3>
-			<h3>Ответы</h3>
+			{{!-- <h3>Ответы</h3> --}}
 		</div>
 
 		<div class="footer" >
