@@ -25,7 +25,6 @@ h3 span {
     right: 42px;
     font-size: 24px;
     font-style: normal;
-/*    color: #F2F850;*/
     color: white;
     font-weight: 400;
     line-height: 24px; /* 100% */
@@ -35,6 +34,10 @@ h3 span {
 
 a#about_link {
 	color: white;
+}
+
+#results a#about_link{
+    color: #F2F850;
 }
 
 #slide {
