@@ -28,6 +28,7 @@ button{transition: all 200ms ease-in;}
     line-height: 24px; /* 100% */
     letter-spacing: -0.96px;
     text-transform: lowercase;
+    z-index: 100;
 }
 
 #about_link {
