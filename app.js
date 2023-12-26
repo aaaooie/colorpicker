@@ -76,7 +76,7 @@ let check_session=(req, res, next)=>{
   // console.log(req.session)
 
   if (req.session.isNew || !Boolean(req.session.id)) {
-    init_session(req, res, _show('first'))
+    init_session(req, res, ()=>res.render('first'))
 
   } else next()
 
